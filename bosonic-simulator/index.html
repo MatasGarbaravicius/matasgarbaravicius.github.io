@@ -3,29 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quantum Circuit Simulator</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Bosonic Quantum Simulator</title>
 </head>
 <body>
-  <div class="container">
-    <h1>Quantum Circuit Simulator</h1>
+  <h1>Bosonic Quantum Circuit Simulator</h1>
 
-    <!-- Input fields to enter parameters -->
-    <div>
-      <label for="operator">Operator:</label>
-      <input type="text" id="operator" placeholder="Enter operator parameters">
-      <button id="addOperator">Add Operator</button>
-    </div>
-
-    <!-- Circuit drawing -->
-    <h3>Current Circuit:</h3>
-    <img id="circuitImage" src="images/initial_circuit.png" alt="Quantum Circuit">
-
-    <!-- Simulate button -->
-    <button id="simulate">Run Simulation</button>
-    <h3>Simulation Result:</h3>
-    <pre id="simulationResult">Results will appear here</pre>
+  <!-- Set number of wires (disappears after first gate) -->
+  <div id="wireDiv">
+    <input type="number" id="numWires" value="4" min="1">
+    <button id="setWiresBtn">Set Number of Wires</button>
   </div>
+
+  <hr>
+
+  <!-- RX, RY, RZ gates -->
+  <div>
+    <h3>Add Gates:</h3>
+    <div>
+      RX: <input type="number" id="rxAngle" placeholder="Angle"> Wire: <input type="number" id="rxWire" placeholder="Wire">
+      <button onclick="addGate('RX')">Add RX</button>
+    </div>
+    <div>
+      RY: <input type="number" id="ryAngle" placeholder="Angle"> Wire: <input type="number" id="ryWire" placeholder="Wire">
+      <button onclick="addGate('RY')">Add RY</button>
+    </div>
+    <div>
+      RZ: <input type="number" id="rzAngle" placeholder="Angle"> Wire: <input type="number" id="rzWire" placeholder="Wire">
+      <button onclick="addGate('RZ')">Add RZ</button>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Measurement gate -->
+  <div>
+    Measurement: Wire: <input type="number" id="measWire" placeholder="Wire">
+    <button onclick="addMeasurement()">Add Measurement</button>
+  </div>
+
+  <hr>
+
+  <!-- Circuit image -->
+  <div>
+    <img id="circuitImage" src="images/initial_circuit.png" alt="Quantum Circuit" width="500" height="500">
+  </div>
+
+  <hr>
+
+  <!-- Run simulation -->
+  <div>
+    <button id="runSimulation">Run Simulation</button>
+  </div>
+
+  <div id="simResult"></div>
 
   <script src="app.js"></script>
 </body>
