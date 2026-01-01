@@ -1,65 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bosonic Quantum Simulator</title>
+  <meta charset="utf-8">
+  <title>Bosonic Simulator</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Bosonic Quantum Circuit Simulator</h1>
 
-  <!-- Set number of wires (disappears after first gate) -->
-  <div id="wireDiv">
-    <input type="number" id="numWires" value="4" min="1">
-    <button id="setWiresBtn">Set Number of Wires</button>
-  </div>
+<h1>Quantum Circuit Simulator</h1>
 
-  <hr>
+<div id="wireControls">
+  Wires:
+  <input id="wireCount" type="number" min="1" value="4">
+  <button onclick="setWires()">Set</button>
+</div>
 
-  <!-- RX, RY, RZ gates -->
-  <div>
-    <h3>Add Gates:</h3>
-    <div>
-      RX: <input type="number" id="rxAngle" placeholder="Angle"> Wire: <input type="number" id="rxWire" placeholder="Wire">
-      <button onclick="addGate('RX')">Add RX</button>
-    </div>
-    <div>
-      RY: <input type="number" id="ryAngle" placeholder="Angle"> Wire: <input type="number" id="ryWire" placeholder="Wire">
-      <button onclick="addGate('RY')">Add RY</button>
-    </div>
-    <div>
-      RZ: <input type="number" id="rzAngle" placeholder="Angle"> Wire: <input type="number" id="rzWire" placeholder="Wire">
-      <button onclick="addGate('RZ')">Add RZ</button>
-    </div>
-  </div>
+<hr>
 
-  <hr>
+<h3>Gates</h3>
 
-  <!-- Measurement gate -->
-  <div>
-    Measurement: Wire: <input type="number" id="measWire" placeholder="Wire">
-    <button onclick="addMeasurement()">Add Measurement</button>
-  </div>
+<div>
+  RX: angle <input id="rxAngle" type="number">
+  wire <input id="rxWire" type="number">
+  <button onclick="addGate('RX')">Add</button>
+</div>
 
-  <hr>
+<div>
+  RY: angle <input id="ryAngle" type="number">
+  wire <input id="ryWire" type="number">
+  <button onclick="addGate('RY')">Add</button>
+</div>
 
-  <!-- Circuit image -->
-  <div id="circuitContainer">
-    <img id="circuitImage"
-       src="images/initial_circuit.png"
-       alt="Quantum Circuit">
-  </div>
+<div>
+  RZ: angle <input id="rzAngle" type="number">
+  wire <input id="rzWire" type="number">
+  <button onclick="addGate('RZ')">Add</button>
+</div>
 
+<div>
+  Measure wire <input id="mWire" type="number">
+  <button onclick="addMeasurement()">Add</button>
+</div>
 
-  <hr>
+<hr>
 
-  <!-- Run simulation -->
-  <div>
-    <button id="runSimulation">Run Simulation</button>
-  </div>
+<div id="circuitContainer">
+  <img id="circuitImage" src="images/initial_circuit.png">
+</div>
 
-  <div id="simResult"></div>
+<hr>
 
-  <script src="app.js"></script>
+<button onclick="runSimulation()">Run simulation</button>
+<pre id="output"></pre>
+
+<script src="app.js"></script>
 </body>
 </html>
