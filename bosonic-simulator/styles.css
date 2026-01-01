@@ -2,14 +2,13 @@ body {
   font-family: sans-serif;
 }
 
-#circuitContainer {
-  max-width: 100%;
-  overflow-x: auto;
+#circuitBox {
   border: 1px solid #ccc;
   padding: 10px;
+  overflow-x: auto;
 }
 
-#circuitImage {
+img {
   height: auto;
   display: block;
 }

@@ -1,80 +1,89 @@
 const BACKEND = "https://bosonic-simulator--matasgarba.replit.app";
 
-let circuit = {
-  wires: 4,
-  gates: []
+let state = {
+  num_wires: 4,
+  gates: [],
+  measurement: {
+    wires: [0],
+    amplitude: [[1, 0]]
+  }
 };
 
-/* ---------- URL STATE ---------- */
+/* ---------- URL ---------- */
 
 function saveURL() {
-  const encoded = btoa(JSON.stringify(circuit));
-  window.location.hash = encoded;
+  location.hash = btoa(JSON.stringify(state));
 }
 
 function loadURL() {
   if (!location.hash) return;
-  try {
-    circuit = JSON.parse(atob(location.hash.slice(1)));
-    document.getElementById("wireCount").value = circuit.wires;
-    if (circuit.gates.length > 0) {
-      document.getElementById("wireControls").style.display = "none";
-    }
-    renderCircuit();
-  } catch {
-    alert("Invalid circuit link");
-  }
+  state = JSON.parse(atob(location.hash.slice(1)));
+  document.getElementById("numModes").value = state.num_wires;
+  render();
 }
 
-/* ---------- CIRCUIT MODIFICATION ---------- */
+/* ---------- Gates ---------- */
 
-function setWires() {
-  if (circuit.gates.length > 0) return;
-  circuit.wires = parseInt(document.getElementById("wireCount").value);
+function setModes() {
+  state.num_wires = parseInt(document.getElementById("numModes").value);
+  state.gates = [];
   saveURL();
-  renderCircuit();
+  render();
 }
 
-function addGate(type) {
-  const angle = parseFloat(document.getElementById(type.toLowerCase() + "Angle").value);
-  const wire = parseInt(document.getElementById(type.toLowerCase() + "Wire").value);
-  circuit.gates.push({ type, wire, angle });
-  document.getElementById("wireControls").style.display = "none";
+function addPhase() {
+  state.gates.push({
+    type: "F",
+    mode: parseInt(fMode.value),
+    phi: parseFloat(fAngle.value)
+  });
   saveURL();
-  renderCircuit();
+  render();
 }
 
-function addMeasurement() {
-  const wire = parseInt(document.getElementById("mWire").value);
-  circuit.gates.push({ type: "MEASURE", wire });
-  document.getElementById("wireControls").style.display = "none";
+function addSqueezing() {
+  state.gates.push({
+    type: "S",
+    mode: parseInt(sMode.value),
+    z: parseFloat(sZ.value)
+  });
   saveURL();
-  renderCircuit();
+  render();
 }
 
-/* ---------- BACKEND CALLS ---------- */
+/* ---------- Backend ---------- */
 
-async function renderCircuit() {
+async function render() {
   const res = await fetch(BACKEND + "/render", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(circuit)
+    body: JSON.stringify(state)
   });
-  const blob = await res.blob();
-  document.getElementById("circuitImage").src = URL.createObjectURL(blob);
+  document.getElementById("circuitImage").src =
+    URL.createObjectURL(await res.blob());
 }
 
-async function runSimulation() {
+async function simulate() {
+  state.measurement.wires =
+    document.getElementById("mWires").value.split(",").map(Number);
+
+  state.measurement.amplitude =
+    document.getElementById("mAmp").value.split(",").map(s => {
+      const [re, im] = s.replace("i","").split("+");
+      return [parseFloat(re), parseFloat(im)];
+    });
+
+  saveURL();
+
   const res = await fetch(BACKEND + "/simulate", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(circuit)
+    body: JSON.stringify(state)
   });
-  const data = await res.json();
-  document.getElementById("output").textContent =
-    data.error ? "Error: " + data.error : JSON.stringify(data.counts, null, 2);
-}
 
-/* ---------- INIT ---------- */
+  const data = await res.json();
+  output.textContent =
+    data.error ? data.error : "Probability = " + data.probability;
+}
 
 loadURL();
