@@ -2,7 +2,9 @@ const BACKEND = "https://bosonic-simulator--matasgarba.replit.app";
 
 let state = {
   num_wires: 4,
-  gates: [],
+  superposition: [
+    { coefficient: [1, 0], gates: [] }
+  ],
   measurement: {
     wires: [0],
     amplitude: [[1, 0]]
@@ -18,57 +20,118 @@ function saveURL() {
 function loadURL() {
   if (!location.hash) return;
   state = JSON.parse(atob(location.hash.slice(1)));
-  document.getElementById("numModes").value = state.num_wires;
-  render();
+  renderUI();
+  renderCircuit();
 }
 
-/* ---------- Gates ---------- */
+/* ---------- UI ---------- */
 
 function setModes() {
-  state.num_wires = parseInt(document.getElementById("numModes").value);
-  state.gates = [];
+  state.num_wires = parseInt(numModes.value);
+  state.superposition.forEach(t => t.gates = []);
   saveURL();
-  render();
+  renderUI();
+  renderCircuit();
 }
 
-function addPhase() {
-  state.gates.push({
-    type: "F",
-    mode: parseInt(fMode.value),
-    phi: parseFloat(fAngle.value)
-  });
+function addTerm() {
+  state.superposition.push({ coefficient: [0, 0], gates: [] });
   saveURL();
-  render();
+  renderUI();
 }
 
-function addSqueezing() {
-  state.gates.push({
-    type: "S",
-    mode: parseInt(sMode.value),
-    z: parseFloat(sZ.value)
+function renderUI() {
+  numModes.value = state.num_wires;
+  const div = document.getElementById("terms");
+  div.innerHTML = "";
+
+  state.superposition.forEach((term, i) => {
+    const el = document.createElement("div");
+    el.className = "term";
+    el.innerHTML = `
+      <h4>Term ${i}</h4>
+      Coefficient:
+      <input value="${term.coefficient[0]}+${term.coefficient[1]}i"
+        onchange="setCoeff(${i}, this.value)">
+
+      <br><br>
+
+      Phase F:
+      mode <input id="fMode${i}" size="2">
+      angle <input id="fAngle${i}" size="4">
+      <button onclick="addGate(${i}, 'F')">Add</button>
+
+      <br>
+
+      Squeeze S:
+      mode <input id="sMode${i}" size="2">
+      z <input id="sZ${i}" size="4">
+      <button onclick="addGate(${i}, 'S')">Add</button>
+
+      <br>
+
+      Displacement D:
+      α (comma complex) <input id="dAlpha${i}" value="0+0i">
+      <button onclick="addGate(${i}, 'D')">Add</button>
+    `;
+    div.appendChild(el);
   });
+}
+
+/* ---------- Gate handling ---------- */
+
+function setCoeff(i, val) {
+  const [re, im] = val.replace("i","").split("+");
+  state.superposition[i].coefficient = [parseFloat(re), parseFloat(im)];
   saveURL();
-  render();
+}
+
+function addGate(i, type) {
+  if (type === "F") {
+    state.superposition[i].gates.push({
+      type: "F",
+      mode: parseInt(document.getElementById(`fMode${i}`).value),
+      phi: parseFloat(document.getElementById(`fAngle${i}`).value)
+    });
+  }
+  if (type === "S") {
+    state.superposition[i].gates.push({
+      type: "S",
+      mode: parseInt(document.getElementById(`sMode${i}`).value),
+      z: parseFloat(document.getElementById(`sZ${i}`).value)
+    });
+  }
+  if (type === "D") {
+    const parts = document.getElementById(`dAlpha${i}`).value.split(",");
+    state.superposition[i].gates.push({
+      type: "D",
+      alpha: parts.map(s => {
+        const [re, im] = s.replace("i","").split("+");
+        return [parseFloat(re), parseFloat(im)];
+      })
+    });
+  }
+  saveURL();
+  renderCircuit();
 }
 
 /* ---------- Backend ---------- */
 
-async function render() {
+async function renderCircuit() {
   const res = await fetch(BACKEND + "/render", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(state)
   });
-  document.getElementById("circuitImage").src =
-    URL.createObjectURL(await res.blob());
+  circuitImage.src = URL.createObjectURL(await res.blob());
 }
 
 async function simulate() {
   state.measurement.wires =
-    document.getElementById("mWires").value.split(",").map(Number);
+    mWires.value.split(",").map(Number);
 
   state.measurement.amplitude =
-    document.getElementById("mAmp").value.split(",").map(s => {
+    mAmp.value.split(",").map(s => {
       const [re, im] = s.replace("i","").split("+");
       return [parseFloat(re), parseFloat(im)];
     });
@@ -86,4 +149,8 @@ async function simulate() {
     data.error ? data.error : "Probability = " + data.probability;
 }
 
+/* ---------- Init ---------- */
+
+renderUI();
+renderCircuit();
 loadURL();

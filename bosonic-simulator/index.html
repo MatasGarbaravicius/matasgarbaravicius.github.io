@@ -2,43 +2,33 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Gaussian Quantum Simulator</title>
+  <title>Gaussian Quantum Simulator – Phase 2</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Gaussian Quantum Circuit (Phase 1)</h1>
+<h1>Gaussian Quantum Simulator (Phase 2)</h1>
 
-<h3>Number of modes</h3>
+<h3>Global settings</h3>
+Modes:
 <input id="numModes" type="number" min="1" value="4">
 <button onclick="setModes()">Set</button>
 
 <hr>
 
-<h3>Add gate</h3>
+<h3>Superposition terms</h3>
+<button onclick="addTerm()">Add superposition term</button>
 
-<div>
-  Phase shift F<sub>j</sub>(ϕ):
-  mode <input id="fMode" type="number">
-  angle <input id="fAngle" type="number" step="0.01">
-  <button onclick="addPhase()">Add</button>
-</div>
-
-<div>
-  Squeezing S<sub>j</sub>(z):
-  mode <input id="sMode" type="number">
-  z <input id="sZ" type="number" step="0.01">
-  <button onclick="addSqueezing()">Add</button>
-</div>
+<div id="terms"></div>
 
 <hr>
 
 <h3>Measurement</h3>
 Wires (comma-separated):
-<input id="mWires" type="text" value="0">
+<input id="mWires" value="0">
 
-Amplitude (comma-separated complex: a+bi):
-<input id="mAmp" type="text" value="1+0i">
+Amplitude (comma-separated complex):
+<input id="mAmp" value="1+0i">
 
 <hr>
 

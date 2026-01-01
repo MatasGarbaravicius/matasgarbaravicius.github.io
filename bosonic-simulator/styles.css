@@ -2,6 +2,12 @@ body {
   font-family: sans-serif;
 }
 
+.term {
+  border: 1px solid #aaa;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
 #circuitBox {
   border: 1px solid #ccc;
   padding: 10px;
