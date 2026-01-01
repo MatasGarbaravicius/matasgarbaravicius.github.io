@@ -5,16 +5,10 @@ body {
 .term {
   border: 1px solid #aaa;
   padding: 10px;
-  margin-bottom: 10px;
-}
-
-#circuitBox {
-  border: 1px solid #ccc;
-  padding: 10px;
-  overflow-x: auto;
+  margin: 10px 0;
 }
 
 img {
-  height: auto;
   display: block;
+  max-width: none;
 }

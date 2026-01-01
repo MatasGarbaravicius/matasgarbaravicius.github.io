@@ -18,10 +18,11 @@ function saveURL() {
 }
 
 function loadURL() {
-  if (!location.hash) return;
-  state = JSON.parse(atob(location.hash.slice(1)));
+  if (location.hash) {
+    state = JSON.parse(atob(location.hash.slice(1)));
+  }
   renderUI();
-  renderCircuit();
+  renderAllCircuits();
 }
 
 /* ---------- UI ---------- */
@@ -31,7 +32,7 @@ function setModes() {
   state.superposition.forEach(t => t.gates = []);
   saveURL();
   renderUI();
-  renderCircuit();
+  renderAllCircuits();
 }
 
 function addTerm() {
@@ -49,7 +50,10 @@ function renderUI() {
     const el = document.createElement("div");
     el.className = "term";
     el.innerHTML = `
-      <h4>Term ${i}</h4>
+      <h3>Term ${i}</h3>
+
+      <img id="circuit${i}">
+
       Coefficient:
       <input value="${term.coefficient[0]}+${term.coefficient[1]}i"
         onchange="setCoeff(${i}, this.value)">
@@ -71,17 +75,18 @@ function renderUI() {
       <br>
 
       Displacement D:
-      α (comma complex) <input id="dAlpha${i}" value="0+0i">
+      α (comma complex)
+      <input id="dAlpha${i}" value="0+0i">
       <button onclick="addGate(${i}, 'D')">Add</button>
     `;
     div.appendChild(el);
   });
 }
 
-/* ---------- Gate handling ---------- */
+/* ---------- Gates ---------- */
 
-function setCoeff(i, val) {
-  const [re, im] = val.replace("i","").split("+");
+function setCoeff(i, v) {
+  const [re, im] = v.replace("i","").split("+");
   state.superposition[i].coefficient = [parseFloat(re), parseFloat(im)];
   saveURL();
 }
@@ -105,34 +110,45 @@ function addGate(i, type) {
     const parts = document.getElementById(`dAlpha${i}`).value.split(",");
     state.superposition[i].gates.push({
       type: "D",
-      alpha: parts.map(s => {
-        const [re, im] = s.replace("i","").split("+");
+      alpha: parts.map(p => {
+        const [re, im] = p.replace("i","").split("+");
         return [parseFloat(re), parseFloat(im)];
       })
     });
   }
   saveURL();
-  renderCircuit();
+  renderTerm(i);
 }
 
-/* ---------- Backend ---------- */
+/* ---------- Rendering ---------- */
 
-async function renderCircuit() {
-  const res = await fetch(BACKEND + "/render", {
+async function renderTerm(i) {
+  const res = await fetch(BACKEND + "/render_term", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(state)
+    body: JSON.stringify({
+      index: i,
+      num_wires: state.num_wires,
+      term: state.superposition[i]
+    })
   });
-  circuitImage.src = URL.createObjectURL(await res.blob());
+  document.getElementById(`circuit${i}`).src =
+    URL.createObjectURL(await res.blob());
 }
+
+function renderAllCircuits() {
+  state.superposition.forEach((_, i) => renderTerm(i));
+}
+
+/* ---------- Simulation ---------- */
 
 async function simulate() {
   state.measurement.wires =
     mWires.value.split(",").map(Number);
 
   state.measurement.amplitude =
-    mAmp.value.split(",").map(s => {
-      const [re, im] = s.replace("i","").split("+");
+    mAmp.value.split(",").map(p => {
+      const [re, im] = p.replace("i","").split("+");
       return [parseFloat(re), parseFloat(im)];
     });
 
@@ -149,8 +165,4 @@ async function simulate() {
     data.error ? data.error : "Probability = " + data.probability;
 }
 
-/* ---------- Init ---------- */
-
-renderUI();
-renderCircuit();
 loadURL();

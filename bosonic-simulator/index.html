@@ -2,39 +2,30 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Gaussian Quantum Simulator – Phase 2</title>
+  <title>Gaussian Quantum Simulator</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Gaussian Quantum Simulator (Phase 2)</h1>
+<h1>Gaussian Quantum Simulator</h1>
 
-<h3>Global settings</h3>
 Modes:
-<input id="numModes" type="number" min="1" value="4">
+<input id="numModes" type="number" value="4" min="1">
 <button onclick="setModes()">Set</button>
 
 <hr>
 
-<h3>Superposition terms</h3>
 <button onclick="addTerm()">Add superposition term</button>
 
 <div id="terms"></div>
 
 <hr>
 
-<h3>Measurement</h3>
-Wires (comma-separated):
+Measurement wires:
 <input id="mWires" value="0">
 
-Amplitude (comma-separated complex):
+Amplitude:
 <input id="mAmp" value="1+0i">
-
-<hr>
-
-<div id="circuitBox">
-  <img id="circuitImage">
-</div>
 
 <hr>
 
