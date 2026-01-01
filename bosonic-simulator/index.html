@@ -15,17 +15,24 @@ Modes:
 
 <hr>
 
-<button onclick="addTerm()">Add superposition term</button>
-
+<h2>Superposition terms</h2>
+<button onclick="addTerm()">Add term</button>
 <div id="terms"></div>
 
 <hr>
 
-Measurement wires:
-<input id="mWires" value="0">
+<h2>Global circuit</h2>
+<img id="globalCircuit">
 
-Amplitude:
-<input id="mAmp" value="1+0i">
+Displacement:
+<input id="globalAlpha" value="0+0i">
+<button onclick="addGlobalGate()">Add D</button>
+
+<hr>
+
+<h2>Measurement</h2>
+Wires: <input id="mWires" value="0">
+Amplitude: <input id="mAmp" value="1+0i">
 
 <hr>
 

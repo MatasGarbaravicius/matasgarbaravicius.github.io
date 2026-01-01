@@ -5,6 +5,7 @@ let state = {
   superposition: [
     { coefficient: [1, 0], gates: [] }
   ],
+  global_gates: [],
   measurement: {
     wires: [0],
     amplitude: [[1, 0]]
@@ -22,7 +23,7 @@ function loadURL() {
     state = JSON.parse(atob(location.hash.slice(1)));
   }
   renderUI();
-  renderAllCircuits();
+  renderAll();
 }
 
 /* ---------- UI ---------- */
@@ -30,9 +31,9 @@ function loadURL() {
 function setModes() {
   state.num_wires = parseInt(numModes.value);
   state.superposition.forEach(t => t.gates = []);
+  state.global_gates = [];
   saveURL();
-  renderUI();
-  renderAllCircuits();
+  renderAll();
 }
 
 function addTerm() {
@@ -46,36 +47,34 @@ function renderUI() {
   const div = document.getElementById("terms");
   div.innerHTML = "";
 
-  state.superposition.forEach((term, i) => {
+  state.superposition.forEach((t, i) => {
     const el = document.createElement("div");
     el.className = "term";
     el.innerHTML = `
       <h3>Term ${i}</h3>
-
-      <img id="circuit${i}">
+      <img id="term${i}">
 
       Coefficient:
-      <input value="${term.coefficient[0]}+${term.coefficient[1]}i"
+      <input value="${t.coefficient[0]}+${t.coefficient[1]}i"
         onchange="setCoeff(${i}, this.value)">
 
-      <br><br>
+      <br>
 
-      Phase F:
-      mode <input id="fMode${i}" size="2">
-      angle <input id="fAngle${i}" size="4">
+      Phase:
+      <input id="fMode${i}" size="2">
+      <input id="fAngle${i}" size="4">
       <button onclick="addGate(${i}, 'F')">Add</button>
 
       <br>
 
-      Squeeze S:
-      mode <input id="sMode${i}" size="2">
-      z <input id="sZ${i}" size="4">
+      Squeeze:
+      <input id="sMode${i}" size="2">
+      <input id="sZ${i}" size="4">
       <button onclick="addGate(${i}, 'S')">Add</button>
 
       <br>
 
-      Displacement D:
-      α (comma complex)
+      Displacement:
       <input id="dAlpha${i}" value="0+0i">
       <button onclick="addGate(${i}, 'D')">Add</button>
     `;
@@ -92,20 +91,6 @@ function setCoeff(i, v) {
 }
 
 function addGate(i, type) {
-  if (type === "F") {
-    state.superposition[i].gates.push({
-      type: "F",
-      mode: parseInt(document.getElementById(`fMode${i}`).value),
-      phi: parseFloat(document.getElementById(`fAngle${i}`).value)
-    });
-  }
-  if (type === "S") {
-    state.superposition[i].gates.push({
-      type: "S",
-      mode: parseInt(document.getElementById(`sMode${i}`).value),
-      z: parseFloat(document.getElementById(`sZ${i}`).value)
-    });
-  }
   if (type === "D") {
     const parts = document.getElementById(`dAlpha${i}`).value.split(",");
     state.superposition[i].gates.push({
@@ -120,6 +105,19 @@ function addGate(i, type) {
   renderTerm(i);
 }
 
+function addGlobalGate() {
+  const parts = globalAlpha.value.split(",");
+  state.global_gates.push({
+    type: "D",
+    alpha: parts.map(p => {
+      const [re, im] = p.replace("i","").split("+");
+      return [parseFloat(re), parseFloat(im)];
+    })
+  });
+  saveURL();
+  renderGlobal();
+}
+
 /* ---------- Rendering ---------- */
 
 async function renderTerm(i) {
@@ -129,15 +127,28 @@ async function renderTerm(i) {
     body: JSON.stringify({
       index: i,
       num_wires: state.num_wires,
-      term: state.superposition[i]
+      gates: state.superposition[i].gates
     })
   });
-  document.getElementById(`circuit${i}`).src =
+  document.getElementById(`term${i}`).src =
     URL.createObjectURL(await res.blob());
 }
 
-function renderAllCircuits() {
+async function renderGlobal() {
+  const res = await fetch(BACKEND + "/render_global", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      num_wires: state.num_wires,
+      gates: state.global_gates
+    })
+  });
+  globalCircuit.src = URL.createObjectURL(await res.blob());
+}
+
+function renderAll() {
   state.superposition.forEach((_, i) => renderTerm(i));
+  renderGlobal();
 }
 
 /* ---------- Simulation ---------- */
