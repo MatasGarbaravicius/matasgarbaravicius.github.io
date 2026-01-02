@@ -67,6 +67,25 @@ Amplitude: <input id="mAmp" value="1+0i">
 <button onclick="simulate()">Simulate</button>
 <pre id="output"></pre>
 
+<hr>
+
+<h2>Phase-space plots</h2>
+
+Wires:
+<input id="plotWires" value="0">
+
+Resolution:
+<input id="plotResolution" type="number" value="15" min="5" max="50">
+
+<button onclick="generatePlots()">Generate plots for wires</button>
+
+<p style="font-size: 0.9em; color: #555;">
+  The generation of one plot might take up to ~8 seconds for resolution = 15.
+</p>
+
+<div id="plots"></div>
+
+
 <script src="app.js"></script>
 </body>
 </html>

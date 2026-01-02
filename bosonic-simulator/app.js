@@ -9,7 +9,12 @@ let state = {
   measurement: {
     wires: [0],
     amplitude: [[1, 0]]
+  },
+  plot: {
+    wires: [0],
+    resolution: 15
   }
+
 };
 
 /* ---------- URL ---------- */
@@ -23,6 +28,7 @@ function loadURL() {
     state = JSON.parse(atob(location.hash.slice(1)));
   }
   renderUI();
+  renderInputs();
   renderAll();
 }
 
@@ -222,6 +228,17 @@ async function renderGlobal() {
   globalCircuit.src = URL.createObjectURL(await res.blob());
 }
 
+function renderInputs() {
+  mWires.value = state.measurement.wires.join(",");
+  mAmp.value = state.measurement.amplitude
+    .map(([re, im]) => `${re}+${im}i`)
+    .join(",");
+
+  plotWires.value = state.plot.wires.join(",");
+  plotResolution.value = state.plot.resolution;
+}
+
+
 function renderAll() {
   state.superposition.forEach((_, i) => renderTerm(i));
   renderGlobal();
@@ -249,7 +266,33 @@ async function simulate() {
 
   const data = await res.json();
   output.textContent =
-    data.error ? data.error : "Probability = " + data.probability;
+    data.error ? data.error : "Probability density value: " + data.probability;
 }
+
+async function generatePlots() {
+  state.plot.wires = plotWires.value.split(",").map(Number);
+  state.plot.resolution = parseInt(plotResolution.value);
+
+  saveURL();
+
+  const res = await fetch(BACKEND + "/plot", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(state)
+  });
+
+  const blobs = await res.json();
+
+  const div = document.getElementById("plots");
+  div.innerHTML = "";
+
+  blobs.images.forEach((b64, i) => {
+    const img = document.createElement("img");
+    img.src = "data:image/png;base64," + b64;
+    img.alt = `Plot for wire ${state.plot.wires[i]}`;
+    div.appendChild(img);
+  });
+}
+
 
 loadURL();

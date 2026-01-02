@@ -158,6 +158,14 @@ button.delete-last:hover {
   background-color: #d32f2f;
 }
 
+#plots img {
+  margin-top: 15px;
+  max-width: 100%;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 6px rgba(0,0,0,0.15);
+}
+
+
 /* Responsiveness */
 @media (max-width: 768px) {
   .term {
