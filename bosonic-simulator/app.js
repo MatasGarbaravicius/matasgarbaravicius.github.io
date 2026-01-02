@@ -39,7 +39,7 @@ function setModes() {
 function addTerm() {
   state.superposition.push({ coefficient: [0, 0], gates: [] });
   saveURL();
-  renderUI();
+  loadURL();
 }
 
 function renderUI() {
