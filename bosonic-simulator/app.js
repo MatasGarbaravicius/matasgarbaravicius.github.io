@@ -299,7 +299,26 @@ async function generatePlots() {
     img.alt = `Plot for wire ${state.plot.wires[i]}`;
     div.appendChild(img);
   });
+
+  div.scrollIntoView({ behavior: "smooth", block: "end" });
 }
+
+async function normalizeSuperposition() {
+  const res = await fetch(BACKEND + "/normalize", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ superposition: state.superposition })
+  });
+
+  const data = await res.json();
+
+  state.superposition = data.normalized_superposition;
+
+  saveURL();
+
+  renderUI();
+}
+
 
 
 loadURL();
