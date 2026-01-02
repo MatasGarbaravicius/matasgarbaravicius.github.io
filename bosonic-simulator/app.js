@@ -1,88 +1,255 @@
-const API = "https://YOUR-REPLIT-URL.replit.app";
+const BACKEND = "https://bosonic-simulator--matasgarba.replit.app";
 
-let state = null;
+let state = {
+  num_wires: 4,
+  superposition: [
+    { coefficient: [1, 0], gates: [] }
+  ],
+  global_gates: [],
+  measurement: {
+    wires: [0],
+    amplitude: [[1, 0]]
+  }
+};
 
-function encode() {
-  return btoa(JSON.stringify(state));
+/* ---------- URL ---------- */
+
+function saveURL() {
+  location.hash = btoa(JSON.stringify(state));
 }
 
-function decode(s) {
-  return JSON.parse(atob(s));
+function loadURL() {
+  if (location.hash) {
+    state = JSON.parse(atob(location.hash.slice(1)));
+  }
+  renderUI();
+  renderAll();
 }
 
-function init() {
-  state = {
-    num_wires: 4,
-    terms: [
-      { coeff: [1,0], gates: [] },
-      { coeff: [1,0], gates: [] }
-    ],
-    global_gates: []
-  };
-  sync();
+/* ---------- UI ---------- */
+
+function setModes() {
+  state.num_wires = parseInt(numModes.value);
+  state.superposition.forEach(t => t.gates = []);
+  state.global_gates = [];
+  saveURL();
+  renderAll();
 }
 
-function sync() {
-  const enc = encode();
-  location.hash = enc;
-  document.getElementById("stateBox").value = enc;
-  draw();
+function addTerm() {
+  state.superposition.push({ coefficient: [0, 0], gates: [] });
+  saveURL();
+  renderUI();
 }
 
-function draw() {
-  const sel = document.getElementById("target");
-  sel.innerHTML = `<option value="global">Global</option>`;
-  state.terms.forEach((_,i)=>{
-    sel.innerHTML += `<option value="${i}">Term ${i}</option>`;
+function renderUI() {
+  numModes.value = state.num_wires;
+  const div = document.getElementById("terms");
+  div.innerHTML = "";
+
+  state.superposition.forEach((t, i) => {
+    const el = document.createElement("div");
+    el.className = "term";
+    el.innerHTML = `
+      <h3>Term ${i}</h3>
+      <img id="term${i}">
+
+      Coefficient:
+      <input value="${t.coefficient[0]}+${t.coefficient[1]}i"
+        onchange="setCoeff(${i}, this.value)">
+
+      <br>
+
+      Phase:
+      <input id="fMode${i}" size="2">
+      <input id="fAngle${i}" size="4">
+      <button onclick="addGate(${i}, 'F')">Add</button>
+
+      <br>
+
+      Squeeze:
+      <input id="sMode${i}" size="2">
+      <input id="sZ${i}" size="4">
+      <button onclick="addGate(${i}, 'S')">Add</button>
+
+      <br>
+
+      Displacement:
+      <input id="dAlpha${i}" value="0+0i">
+      <button onclick="addGate(${i}, 'D')">Add</button>
+
+      <br>
+
+      Beamsplitter:
+      <input id="bModeJ${i}" size="2" placeholder="j">
+      <input id="bModeK${i}" size="2" placeholder="k">
+      <input id="bOmega${i}" size="4" placeholder="ω">
+      <button onclick="addGate(${i}, 'B')">Add B</button>
+
+      <br>
+
+      <button onclick="deleteGate(${i})">Delete last gate</button>
+    `;
+    div.appendChild(el);
   });
 }
 
-async function render(target) {
-  const res = await fetch(API+"/render", {
+function deleteGate(i) {
+  state.superposition[i].gates.pop();
+  saveURL();
+  renderTerm(i);
+}
+
+function setCoeff(i, v) {
+  const [re, im] = v.replace("i", "").split("+");
+  state.superposition[i].coefficient = [parseFloat(re), parseFloat(im)];
+  saveURL();
+}
+
+function addGate(i, type) {
+  if (type === "F") {
+    state.superposition[i].gates.push({
+      type: "F",
+      mode: parseInt(document.getElementById(`fMode${i}`).value),
+      phi: parseFloat(document.getElementById(`fAngle${i}`).value)
+    });
+  }
+
+  if (type === "S") {
+    state.superposition[i].gates.push({
+      type: "S",
+      mode: parseInt(document.getElementById(`sMode${i}`).value),
+      z: parseFloat(document.getElementById(`sZ${i}`).value)
+    });
+  }
+
+  if (type === "D") {
+    const parts = document.getElementById(`dAlpha${i}`).value.split(",");
+    state.superposition[i].gates.push({
+      type: "D",
+      alpha: parts.map(p => {
+        const [re, im] = p.replace("i", "").split("+");
+        return [parseFloat(re), parseFloat(im)];
+      })
+    });
+  }
+
+  if (type === "B") {
+    state.superposition[i].gates.push({
+      type: "B",
+      j: parseInt(document.getElementById(`bModeJ${i}`).value),
+      k: parseInt(document.getElementById(`bModeK${i}`).value),
+      omega: parseFloat(document.getElementById(`bOmega${i}`).value)
+    });
+  }
+
+  saveURL();
+  renderTerm(i);
+}
+
+function addGlobalGate(type) {
+  if (type === "F") {
+    state.global_gates.push({
+      type: "F",
+      mode: parseInt(globalFMode.value),
+      phi: parseFloat(globalFAngle.value)
+    });
+  }
+
+  if (type === "S") {
+    state.global_gates.push({
+      type: "S",
+      mode: parseInt(globalSMode.value),
+      z: parseFloat(globalSZ.value)
+    });
+  }
+
+  if (type === "D") {
+    const parts = globalAlpha.value.split(",");
+    state.global_gates.push({
+      type: "D",
+      alpha: parts.map(p => {
+        const [re, im] = p.replace("i", "").split("+");
+        return [parseFloat(re), parseFloat(im)];
+      })
+    });
+  }
+
+  if (type === "B") {
+    state.global_gates.push({
+      type: "B",
+      j: parseInt(globalBJ.value),
+      k: parseInt(globalBK.value),
+      omega: parseFloat(globalBOmega.value)
+    });
+  }
+
+  saveURL();
+  renderGlobal();
+}
+
+function deleteGlobalGate() {
+  state.global_gates.pop();
+  saveURL();
+  renderGlobal();
+}
+
+/* ---------- Rendering ---------- */
+
+async function renderTerm(i) {
+  const res = await fetch(BACKEND + "/render_term", {
     method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({state: encode(), target})
-  });
-  return res.blob();
-}
-
-async function addGate() {
-  const t = document.getElementById("target").value;
-  const g = document.getElementById("gateType").value;
-  const p = JSON.parse(document.getElementById("params").value);
-
-  const gate = {type:g, ...p};
-
-  if (t === "global") state.global_gates.push(gate);
-  else state.terms[t].gates.push(gate);
-
-  sync();
-}
-
-function deleteLast() {
-  const t = document.getElementById("target").value;
-  if (t === "global") state.global_gates.pop();
-  else state.terms[t].gates.pop();
-  sync();
-}
-
-async function simulate() {
-  const wires = JSON.parse(document.getElementById("wires").value);
-  const ampl = JSON.parse(document.getElementById("ampl").value);
-
-  const r = await fetch(API+"/simulate", {
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
+    headers: {"Content-Type": "application/json"},
     body: JSON.stringify({
-      state: encode(),
-      wires,
-      amplitude: ampl
+      index: i,
+      num_wires: state.num_wires,
+      gates: state.superposition[i].gates
     })
   });
-  document.getElementById("out").innerText = JSON.stringify(await r.json(),null,2);
+  document.getElementById(`term${i}`).src =
+    URL.createObjectURL(await res.blob());
 }
 
-if (location.hash.length > 1) {
-  state = decode(location.hash.slice(1));
-  sync();
+async function renderGlobal() {
+  const res = await fetch(BACKEND + "/render_global", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      num_wires: state.num_wires,
+      gates: state.global_gates
+    })
+  });
+  globalCircuit.src = URL.createObjectURL(await res.blob());
 }
+
+function renderAll() {
+  state.superposition.forEach((_, i) => renderTerm(i));
+  renderGlobal();
+}
+
+/* ---------- Simulation ---------- */
+
+async function simulate() {
+  state.measurement.wires =
+    mWires.value.split(",").map(Number);
+
+  state.measurement.amplitude =
+    mAmp.value.split(",").map(p => {
+      const [re, im] = p.replace("i", "").split("+");
+      return [parseFloat(re), parseFloat(im)];
+    });
+
+  saveURL();
+
+  const res = await fetch(BACKEND + "/simulate", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(state)
+  });
+
+  const data = await res.json();
+  output.textContent =
+    data.error ? data.error : "Probability = " + data.probability;
+}
+
+loadURL();

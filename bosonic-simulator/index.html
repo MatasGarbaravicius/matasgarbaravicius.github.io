@@ -1,41 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bosonic Gaussian Simulator</title>
+  <meta charset="utf-8">
+  <title>Gaussian Quantum Simulator</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h2>Bosonic Gaussian Simulator</h2>
+<h1>Gaussian Quantum Simulator</h1>
 
-<div>
-  <label>Encoded circuit state (URL-safe):</label>
-  <textarea id="stateBox"></textarea>
-</div>
+Modes:
+<input id="numModes" type="number" value="4" min="1">
+<button onclick="setModes()">Set</button>
 
-<button onclick="init()">Init</button>
+<hr>
 
-<h3>Circuits</h3>
-<div id="circuits"></div>
+<h2>Superposition terms</h2>
+<button onclick="addTerm()">Add term</button>
+<div id="terms"></div>
 
-<h3>Add gate</h3>
-<select id="target"></select>
-<select id="gateType">
-  <option>D</option>
-  <option>F</option>
-  <option>S</option>
-  <option>B</option>
-</select>
-<input id="params" placeholder="params JSON">
-<button onclick="addGate()">Add</button>
-<button onclick="deleteLast()">Delete last</button>
+<hr>
 
-<h3>Simulation</h3>
-<input id="wires" placeholder="wires e.g. [0,1]">
-<input id="ampl" placeholder="amplitude e.g. [[1,0],[0,0]]">
-<button onclick="simulate()">Run</button>
+<h2>Global circuit</h2>
+<img id="globalCircuit">
 
-<pre id="out"></pre>
+<h3>Global gates</h3>
+
+Phase:
+<input id="globalFMode" size="2">
+<input id="globalFAngle" size="4">
+<button onclick="addGlobalGate('F')">Add F</button>
+
+<br><br>
+
+Squeeze:
+<input id="globalSMode" size="2">
+<input id="globalSZ" size="4">
+<button onclick="addGlobalGate('S')">Add S</button>
+
+<br><br>
+
+Displacement:
+<input id="globalAlpha" value="0+0i">
+<button onclick="addGlobalGate('D')">Add D</button>
+
+<br><br>
+
+Beamsplitter:
+<input id="globalBJ" size="2" placeholder="j">
+<input id="globalBK" size="2" placeholder="k">
+<input id="globalBOmega" size="4" placeholder="ω">
+<button onclick="addGlobalGate('B')">Add B</button>
+
+<br><br>
+
+<button onclick="deleteGlobalGate()">Delete last global gate</button>
+
+<hr>
+
+<h2>Measurement</h2>
+Wires: <input id="mWires" value="0">
+Amplitude: <input id="mAmp" value="1+0i">
+
+<hr>
+
+<button onclick="simulate()">Simulate</button>
+<pre id="output"></pre>
 
 <script src="app.js"></script>
 </body>

@@ -1,3 +1,174 @@
-body { font-family: sans-serif; }
-textarea { width: 100%; height: 80px; }
-img { max-width: none; }
+/* Basic Styles */
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f4f4f9;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+h2 {
+  margin-top: 20px;
+  color: #4a4a4a;
+}
+
+/* Container for the terms */
+#terms {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.term {
+  border: 1px solid #ddd;
+  padding: 15px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.term h3 {
+  margin-top: 0;
+  color: #2d3748;
+}
+
+input {
+  margin: 5px 0;
+  padding: 5px;
+  width: 150px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+input:focus {
+  border-color: #007bff;
+}
+
+button {
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #b0b0b0;
+  cursor: not-allowed;
+}
+
+button + button {
+  margin-left: 10px;
+}
+
+/* Input fields for the gates */
+input[type="number"] {
+  width: 100px;
+}
+
+input[type="text"] {
+  width: 160px;
+}
+
+input[type="number"]:focus, input[type="text"]:focus {
+  border-color: #0056b3;
+}
+
+/* Circuit Image */
+img {
+  display: block;
+  margin-top: 15px;
+  max-width: 100%;
+  height: auto;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Global Circuit Rendering */
+#globalCircuit {
+  margin-top: 20px;
+  max-width: 100%;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Delete buttons and additional control buttons */
+button.delete {
+  background-color: #f44336;
+}
+
+button.delete:hover {
+  background-color: #e53935;
+}
+
+/* Styling for term and global gate sections */
+.term .gate-inputs {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.term .gate-inputs input,
+.term .gate-inputs button {
+  margin-bottom: 10px;
+}
+
+/* Section for the global circuit */
+#globalCircuit {
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* Styling for the simulation section */
+#output {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #e9ecef;
+  border-radius: 5px;
+  font-family: "Courier New", Courier, monospace;
+  color: #333;
+  word-wrap: break-word;
+}
+
+/* Amplitude and Wire Inputs */
+#measurement input {
+  width: 150px;
+}
+
+/* Additional styling for delete buttons */
+button.delete-last {
+  background-color: #f44336;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+button.delete-last:hover {
+  background-color: #d32f2f;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .term {
+    padding: 10px;
+  }
+
+  input[type="number"], input[type="text"] {
+    width: 120px;
+  }
+
+  button {
+    padding: 6px 10px;
+  }
+}
