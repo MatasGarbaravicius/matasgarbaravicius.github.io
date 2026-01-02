@@ -48,6 +48,12 @@ function addTerm() {
   loadURL();
 }
 
+function removeTerm(i){
+  state.superposition.splice(i,1);
+  saveURL();
+  loadURL();
+}
+
 function renderUI() {
   numModes.value = state.num_wires;
   const div = document.getElementById("terms");
@@ -95,6 +101,7 @@ function renderUI() {
       <br>
 
       <button onclick="deleteGate(${i})">Delete last gate</button>
+      <button onclick="removeTerm(${i})">Remove Term</button>
     `;
     div.appendChild(el);
   });
