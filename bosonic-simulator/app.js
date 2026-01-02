@@ -307,7 +307,7 @@ async function normalizeSuperposition() {
   const res = await fetch(BACKEND + "/normalize", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ superposition: state.superposition })
+    body: JSON.stringify(state)
   });
 
   const data = await res.json();
