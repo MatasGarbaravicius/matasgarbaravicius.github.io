@@ -91,6 +91,22 @@ function setCoeff(i, v) {
 }
 
 function addGate(i, type) {
+  if (type === "F") {
+    state.superposition[i].gates.push({
+      type: "F",
+      mode: parseInt(document.getElementById(`fMode${i}`).value),
+      phi: parseFloat(document.getElementById(`fAngle${i}`).value)
+    });
+  }
+
+  if (type === "S") {
+    state.superposition[i].gates.push({
+      type: "S",
+      mode: parseInt(document.getElementById(`sMode${i}`).value),
+      z: parseFloat(document.getElementById(`sZ${i}`).value)
+    });
+  }
+
   if (type === "D") {
     const parts = document.getElementById(`dAlpha${i}`).value.split(",");
     state.superposition[i].gates.push({
@@ -101,22 +117,44 @@ function addGate(i, type) {
       })
     });
   }
+
   saveURL();
   renderTerm(i);
 }
 
-function addGlobalGate() {
-  const parts = globalAlpha.value.split(",");
-  state.global_gates.push({
-    type: "D",
-    alpha: parts.map(p => {
-      const [re, im] = p.replace("i","").split("+");
-      return [parseFloat(re), parseFloat(im)];
-    })
-  });
+
+function addGlobalGate(type) {
+  if (type === "F") {
+    state.global_gates.push({
+      type: "F",
+      mode: parseInt(globalFMode.value),
+      phi: parseFloat(globalFAngle.value)
+    });
+  }
+
+  if (type === "S") {
+    state.global_gates.push({
+      type: "S",
+      mode: parseInt(globalSMode.value),
+      z: parseFloat(globalSZ.value)
+    });
+  }
+
+  if (type === "D") {
+    const parts = globalAlpha.value.split(",");
+    state.global_gates.push({
+      type: "D",
+      alpha: parts.map(p => {
+        const [re, im] = p.replace("i","").split("+");
+        return [parseFloat(re), parseFloat(im)];
+      })
+    });
+  }
+
   saveURL();
   renderGlobal();
 }
+
 
 /* ---------- Rendering ---------- */
 
