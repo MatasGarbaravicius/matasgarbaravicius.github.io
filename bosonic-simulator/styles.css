@@ -260,3 +260,10 @@ button.delete-last:hover {
 #simulator-description blockquote {
   font-style: normal;
 }
+
+.section-divider {
+  border: 0;
+  border-top: 1px solid #ddd;
+  margin: 70px 0; /* Extra spacing for separation */
+}
+
