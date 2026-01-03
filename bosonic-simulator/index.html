@@ -83,30 +83,38 @@ Modes:
 
 <h3>Global Gates</h3>
 
-Phase:
-<input id="globalFMode" size="2">
-<input id="globalFAngle" size="4">
+Phase Shift:
+<input id="globalFMode" size="2" placeholder="j">
+<span style="font-size: 0.9em; color: #555;">e.g., <code>2</code> or <code>4</code></span>
+<input id="globalFAngle" size="4" placeholder="ω">
+<span style="font-size: 0.9em; color: #555;">e.g., <code>0.23</code>, <code>123.4567</code>, or <code>5</code></span>
 <button onclick="addGlobalGate('F')">Add F</button>
 
 <br><br>
 
 Squeeze:
-<input id="globalSMode" size="2">
-<input id="globalSZ" size="4">
+<input id="globalSMode" size="2" placeholder="j">
+<span style="font-size: 0.9em; color: #555;">e.g., <code>2</code> or <code>4</code></span>
+<input id="globalSZ" size="4" placeholder="z">
+<span style="font-size: 0.9em; color: #555;">e.g., <code>0.23</code>, <code>123.4567</code>, or <code>5</code></span>
 <button onclick="addGlobalGate('S')">Add S</button>
 
 <br><br>
 
 Displacement:
-<input id="globalAlpha" value="0+0i">
+<input id="globalAlpha" placeholder="α">
+<span style="font-size: 0.9em; color: #555;">e.g., <code>-1+0i,1+-1i,5+-2i</code> or <code>1+1i,2+2i</code></span>
 <button onclick="addGlobalGate('D')">Add D</button>
 
 <br><br>
 
 Beamsplitter:
 <input id="globalBJ" size="2" placeholder="j">
+<span style="font-size: 0.9em; color: #555;">e.g., <code>2</code> or <code>4</code></span>
 <input id="globalBK" size="2" placeholder="k">
+<span style="font-size: 0.9em; color: #555;">e.g., <code>2</code> or <code>4</code></span>
 <input id="globalBOmega" size="4" placeholder="ω">
+<span style="font-size: 0.9em; color: #555;">e.g., <code>0.23</code>, <code>123.4567</code>, or <code>5</code></span>
 <button onclick="addGlobalGate('B')">Add B</button>
 
 <br><br>

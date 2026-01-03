@@ -69,41 +69,41 @@ function renderUI() {
       Coefficient:
       <input value="${t.coefficient[0]}+${t.coefficient[1]}i"
         onchange="setCoeff(${i}, this.value)">
-      <span style="font-size: 0.9em; color: #555;">e.g., <code>1.23+-1i</code>, <code>1+1i</code>, or <code>-4.5+-23.4567</code></span>
+      <span style="font-size: 0.9em; color: #555;">e.g., <code>0.23+-0.123i</code>, <code>0.7+0.7i</code>, or <code>-0.456+-0.234567i</code></span>
       <br>
 
-      Phase Shift \( F_j(\phi) \):
+      Phase Shift:
       <input id="fMode${i}" size="2" placeholder="j">
       <span style="font-size: 0.9em; color: #555;">e.g., <code>2</code> or <code>4</code></span>
       <input id="fAngle${i}" size="4" placeholder="ω">
-      <span style="font-size: 0.9em; color: #555;">e.g., <code>1.23</code>, <code>123.4567</code>, or <code>5</code></span>
+      <span style="font-size: 0.9em; color: #555;">e.g., <code>0.23</code>, <code>123.4567</code>, or <code>5</code></span>
       <button onclick="addGate(${i}, 'F')">Add</button>
 
       <br>
 
-      Squeezing \( S_j(z) \):
+      Squeezing:
       <input id="sMode${i}" size="2" placeholder="j">
       <span style="font-size: 0.9em; color: #555;">e.g., <code>2</code> or <code>4</code></span>
       <input id="sZ${i}" size="4" placeholder="z">
-      <span style="font-size: 0.9em; color: #555;">e.g., <code>1.23</code>, <code>123.4567</code>, or <code>5</code></span>
+      <span style="font-size: 0.9em; color: #555;">e.g., <code>0.23</code>, <code>123.4567</code>, or <code>5</code></span>
       <button onclick="addGate(${i}, 'S')">Add</button>
 
       <br>
 
-      Displacement \( D(\alpha) \):
+      Displacement:
       <input id="dAlpha${i}" placeholder="α">
-      <span style="font-size: 0.9em; color: #555;">e.g., <code>-1+0i,1+-1i,5+-2i</code> or <code>1+1i</code></span>
+      <span style="font-size: 0.9em; color: #555;">e.g., <code>-1+0i,1+-1i,5+-2i</code> or <code>1+1i,2+2i</code></span>
       <button onclick="addGate(${i}, 'D')">Add</button>
 
       <br>
 
-      Beamsplitter \( B_{j,k}(\omega) \):
+      Beamsplitter:
       <input id="bModeJ${i}" size="2" placeholder="j">
       <span style="font-size: 0.9em; color: #555;">e.g., <code>2</code> or <code>4</code></span>
       <input id="bModeK${i}" size="2" placeholder="k">
       <span style="font-size: 0.9em; color: #555;">e.g., <code>2</code> or <code>4</code></span>
       <input id="bOmega${i}" size="4" placeholder="ω">
-      <span style="font-size: 0.9em; color: #555;">e.g., <code>1.23</code>, <code>123.4567</code>, or <code>5</code></span>
+      <span style="font-size: 0.9em; color: #555;">e.g., <code>0.23</code>, <code>123.4567</code>, or <code>5</code></span>
       <button onclick="addGate(${i}, 'B')">Add B</button>
 
       <br>
