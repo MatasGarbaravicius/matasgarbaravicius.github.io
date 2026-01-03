@@ -300,7 +300,7 @@ async function generatePlots() {
     div.appendChild(img);
   });
 
-  div.scrollIntoView({ behavior: "smooth", block: "end" });
+  div.scrollIntoView({ behavior: "auto", block: "end" });
 }
 
 async function normalizeSuperposition() {
