@@ -300,7 +300,14 @@ async function generatePlots() {
     div.appendChild(img);
   });
 
-  div.scrollIntoView({ behavior: "auto", block: "end" });
+  // Scroll to the bottom of the page after content is added
+  setTimeout(() => {
+    // Scroll to the bottom of the entire document
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth"
+    });
+  }, 100);  // Delay to make sure images are appended before scrolling
 }
 
 async function normalizeSuperposition() {
@@ -351,5 +358,3 @@ window.fetch = async function (...args) {
 
 
 loadURL();
-
-showSpinner();
