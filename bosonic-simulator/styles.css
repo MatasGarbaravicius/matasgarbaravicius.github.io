@@ -256,3 +256,7 @@ button.delete-last:hover {
   color: #333;
   margin: 10px 0;
 }
+
+#simulator-description blockquote {
+  font-style: normal;
+}

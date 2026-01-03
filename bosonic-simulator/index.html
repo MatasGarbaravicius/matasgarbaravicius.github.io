@@ -17,10 +17,12 @@
   <p><i>Scroll down for the simulator.</i></p>
   <h2>Simulator Features</h2>
   <ul>
-      <li>Prepare a Gaussian state from a vacuum state by applying Gaussian unitaries (see sections <i>Supported Gaussian Unitaries</i> and <i>Superposition Terms</i>).</li>
-      <li>Apply Gaussian unitaries to a superposition of Gaussian states (see section <i>Global Circuit</i>).</li>
-      <li>Perform measurements on the resulting state (see section <i>Measurements</i>) or visualize the probability density function of modes (see section <i>Phase-space Plots</i>).</li>
+      <li><strong>Prepare Gaussian States for Superposition:</strong> Start with a vacuum state and apply a series of Gaussian unitaries to create individual Gaussian states. These states are then used as the building blocks for your quantum superposition (see sections <i>Supported Gaussian Unitaries</i> and <i>Superposition Terms</i>).</li>
+      <li><strong>Build Superpositions:</strong> Combine the prepared Gaussian states into a quantum superposition, where each state is weighted by a complex coefficient. This allows you to represent a range of quantum states (see section <i>Superposition Terms</i>).</li>
+      <li><strong>Apply Global Unitaries:</strong> Apply additional Gaussian unitaries to the entire superposition of states, modifying the overall quantum state (see section <i>Global Circuit</i>).</li>
+      <li><strong>Perform Measurements:</strong> After applying global unitaries, perform quantum measurements on the resulting state. You can measure the probability of specific outcomes or visualize the probability density function of modes (see sections <i>Measurements</i> and <i>Phase-space Plots</i>).</li>
   </ul>
+
 
   <h2>Supported Gaussian Unitaries</h2>
   <p>The following Gaussian unitaries are supported in the simulator:</p>
@@ -37,9 +39,8 @@
       <p><strong>Adhere strictly to the input format:</strong></p>
       <ul>
           <li>Read the format examples next to the input fields carefully.</li>
-          <li><u>Complex numbers</u> must be written in the format \( a+bi \), where \( a \) and \( b \) are real numbers. Note: Do not use parentheses for real and imaginary parts, and always write a plus sign (e.g., <i>-1.234 + -1.234i</i> is the correct format, not <i>-1.234 - 1.234i</i> or <i>(-1.234) + (-1.234)i</i>).</li>
-          <li>Always specify both the real and imaginary parts with numbers, and do not omit "i" in complex numbers. Inputs such as <i>1</i>, <i>2i</i>, and <i>1 + i</i> are not allowed.</li>
-          <li>For vector/list inputs (e.g., "Wires" or "Displacement" fields), separate the entries with commas. Examples: <i>1,2,3,4</i> and <i>1+1i, -1+-1i, 0+0i</i>.</li>
+          <li><i>Complex numbers</i> must be written in the format \( a+bi \), where \( a \) and \( b \) are real numbers. Note: Do not use parentheses for real and imaginary parts, and always write a plus sign (e.g., <i>-1.234 + -1.234i</i> is the correct format, not <i>-1.234 - 1.234i</i> or <i>(-1.234) + (-1.234)i</i>).Always specify both the real and imaginary parts using explicit numerical values, and do not omit "i" in complex numbers. Inputs such as <i>1</i>, <i>2i</i>, and <i>1 + i</i> are not allowed.</li>
+          <li>For vector/list inputs (e.g., "Wires" or "Displacement" fields), separate the entries with commas. Examples: <i>1,2,3,4</i> and <i>1+1i, -1+-1i, 0+-2i</i>.</li>
       </ul>
       <p><strong class="highlight">Reducing the resolution can speed up plot rendering.</strong> For small circuits and resolution set to 15, it should take up to 5-20 seconds.</p>
       <p><strong class="highlight">If no output is produced, please check if your input is correct.</strong> If an incorrect input is provided, error messages will not be displayed.</p>
@@ -55,56 +56,9 @@
   </blockquote>
 </div>
 
-
-<div id="simulator-description">
-    <!-- Optional note for scrolling -->
-    <p><i>Scroll down for the simulator.</i></p>
-
-    <h1>This Simulator Allows To:</h1>
-
-    <ul>
-        <li>Prepare a Gaussian state from a vacuum state by applying Gaussian unitaries (see section <i>Superposition Terms</i>).</li>
-        <li>Apply Gaussian unitaries to a superposition of Gaussian states (see sections <i>Supported Gaussian Unitaries</i> and <i>Superposition Terms</i>).</li>
-        <li>Perform measurements on the resulting state (see section <i>Measurements</i>) or visualize the probability density function of modes (see section <i>Phase-space Plots</i>).</li>
-    </ul>
-
-    <h2>Supported Gaussian Unitaries</h2>
-    <p>The following Gaussian unitaries are supported in the simulator (we use the notation \( [\ell] = \{1, \dots, \ell\} \) for \( \ell \in \mathbb{N} \)): </p>
-    <ol>
-        <li>n-mode displacement operators \( D(\alpha), \alpha \in \mathbb{C}^n \),</li>
-        <li>Single-mode phase shifters \( F_j(\varphi), \varphi \in \mathbb{R} \) applied to mode \( j \in [n] \),</li>
-        <li>Single-mode squeezing operators \( S_j(z), z \geq 1 \) applied to mode \( j \in [n] \), and</li>
-        <li>Beamsplitters \( B_{j,k}(\omega), \omega \in \mathbb{R}, j \neq k \) applied to modes \( j, k \in [n] \).</li>
-    </ol>
-
-    <h2>Input Format Notes</h2>
-    <div class="note">
-        <p><strong>Adhere strictly to the input format:</strong></p>
-        <ul>
-            <li>Read the format examples next to the input fields carefully.</li>
-            <li><span class="highlight">Complex numbers</span> must be written in the format \( a + bi \), where \( a \) and \( b \) are real numbers. Note: Do not use parentheses for real and imaginary parts, and always write a plus sign (e.g., <i>-1.234 + 1.234i</i> is the correct format, not <i>-1.234 - 1.234i</i> or <i>-1.234 + (-1.234)i</i>).</li>
-            <li>Always specify both the real and imaginary parts, and do not omit "i" in complex numbers. For example, \( 1 + i \) is not allowed.</li>
-            <li>For vector/list inputs (e.g., "Wires" or "Displacement" fields), separate the entries with commas. Examples: <i>1,2,3,4</i>, <i>1 + 1i, -1 + 1i, 0 + 0i</i>.</li>
-        </ul>
-        <p><strong class="highlight">Reducing the resolution can speed up rendering.</strong> For small circuits and resolution set to 15, it should take 5-20 seconds.</p>
-        <p><strong class="highlight">If no output is produced, please check if your input is correct.</strong></p>
-    </div>
-
-    <h2>Additional Features</h2>
-    <p>Use the "Normalize" button to automatically normalize the coefficients of a superposition of Gaussian states (see section "Normalize Superposition Coefficients").</p>
-    <p>The circuit images are generated using IBM Qiskit.</p>
-
-    <h2>References</h2>
-    <blockquote>
-        <p>Beatriz Dias and Robert König. "Classical simulation of non-Gaussian bosonic circuits." <i>Physical Review A, 110:042402, October 2024</i>.</p>
-    </blockquote>
-</div>
-
 <hr> 
 
 <h1>Bosonic Simulator</h1>
-
-<hr>
 
 Modes:
 <input id="numModes" type="number" value="4" min="1">
