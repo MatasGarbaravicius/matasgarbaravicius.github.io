@@ -113,6 +113,8 @@ function renderUI() {
     `;
     div.appendChild(el);
   });
+
+  MathJax.typeset();
 }
 
 function deleteGate(i) {
