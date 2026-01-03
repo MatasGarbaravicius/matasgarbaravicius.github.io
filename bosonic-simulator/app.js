@@ -329,6 +329,23 @@ function hideSpinner() {
     document.getElementById("spinner").style.display = "none";
 }
 
+// Store the original fetch function
+const originalFetch = window.fetch;
+
+// Override the global fetch
+window.fetch = async function (...args) {
+    showSpinner(); // Show spinner before the fetch starts
+
+    try {
+        const response = await originalFetch(...args);
+        return response;
+    } catch (error) {
+        console.error('Fetch error:', error);
+        throw error;
+    } finally {
+        hideSpinner(); // Hide spinner after the fetch ends (success or failure)
+    }
+};
 
 
 loadURL();
