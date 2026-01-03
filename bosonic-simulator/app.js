@@ -347,5 +347,7 @@ window.fetch = async function (...args) {
     }
 };
 
+showSpinner();
+
 
 loadURL();
