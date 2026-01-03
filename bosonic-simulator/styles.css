@@ -264,6 +264,8 @@ button.delete-last:hover {
 .bigsection-divider {
   border: 0;
   border-top: 1px solid #ddd;
-  margin: 70px 0; /* Extra spacing for separation */
+  margin: 40px 0; /* Extra spacing for separation */
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
