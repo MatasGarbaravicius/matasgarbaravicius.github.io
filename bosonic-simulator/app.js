@@ -316,7 +316,7 @@ async function normalizeSuperposition() {
 
   saveURL();
 
-  renderUI();
+  loadURL();
 }
 
 
