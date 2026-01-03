@@ -201,3 +201,58 @@ button.delete-last:hover {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+/* Specific styles for the Gaussian State Simulator description */
+#simulator-description h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+#simulator-description h2 {
+  font-size: 1.5em;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+#simulator-description h3 {
+  font-size: 1.3em;
+  color: #2d3748;
+  margin-bottom: 8px;
+}
+
+#simulator-description ul, #simulator-description ol {
+  margin-left: 20px;
+}
+
+#simulator-description ul li, #simulator-description ol li {
+  margin-bottom: 10px;
+}
+
+#simulator-description .term .note {
+  background-color: #f4f4f9;
+  border-left: 5px solid #8e44ad;
+  padding: 15px;
+  font-size: 1em;
+  margin-top: 20px;
+}
+
+#simulator-description .term .note p {
+  margin: 0;
+  font-size: 0.95em;
+}
+
+/* Styling for the blockquotes in the description */
+#simulator-description blockquote {
+  background-color: #f9f9f9;
+  border-left: 5px solid #007bff;
+  padding: 10px;
+  font-style: italic;
+  margin: 20px 0;
+}
+
+/* MathJax styling for better display of equations */
+#simulator-description .mathjax {
+  font-size: 1.1em;
+  color: #333;
+  margin: 10px 0;
+}
