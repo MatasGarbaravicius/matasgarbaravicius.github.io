@@ -73,36 +73,36 @@ function renderUI() {
       <br>
 
       Phase Shift \( F_j(\phi) \):
-      <input id="fMode${i}" size="2" placeholder="\( j \)">
+      <input id="fMode${i}" size="2" placeholder="j">
       <span style="font-size: 0.9em; color: #555;">e.g., <code>2</code> or <code>4</code></span>
-      <input id="fAngle${i}" size="4" placeholder="\( \omega \)">
+      <input id="fAngle${i}" size="4" placeholder="ω">
       <span style="font-size: 0.9em; color: #555;">e.g., <code>1.23</code>, <code>123.4567</code>, or <code>5</code></span>
       <button onclick="addGate(${i}, 'F')">Add</button>
 
       <br>
 
       Squeezing \( S_j(z) \):
-      <input id="sMode${i}" size="2" placeholder="\( j \)">
+      <input id="sMode${i}" size="2" placeholder="j">
       <span style="font-size: 0.9em; color: #555;">e.g., <code>2</code> or <code>4</code></span>
-      <input id="sZ${i}" size="4" placeholder="\( z \)">
+      <input id="sZ${i}" size="4" placeholder="z">
       <span style="font-size: 0.9em; color: #555;">e.g., <code>1.23</code>, <code>123.4567</code>, or <code>5</code></span>
       <button onclick="addGate(${i}, 'S')">Add</button>
 
       <br>
 
       Displacement \( D(\alpha) \):
-      <input id="dAlpha${i}" placeholder="\(\alpha\)">
+      <input id="dAlpha${i}" placeholder="α">
       <span style="font-size: 0.9em; color: #555;">e.g., <code>-1+0i,1+-1i,5+-2i</code> or <code>1+1i</code></span>
       <button onclick="addGate(${i}, 'D')">Add</button>
 
       <br>
 
       Beamsplitter \( B_{j,k}(\omega) \):
-      <input id="bModeJ${i}" size="2" placeholder="\( j \)">
+      <input id="bModeJ${i}" size="2" placeholder="j">
       <span style="font-size: 0.9em; color: #555;">e.g., <code>2</code> or <code>4</code></span>
-      <input id="bModeK${i}" size="2" placeholder="\( k \)">
+      <input id="bModeK${i}" size="2" placeholder="k">
       <span style="font-size: 0.9em; color: #555;">e.g., <code>2</code> or <code>4</code></span>
-      <input id="bOmega${i}" size="4" placeholder="\( \omega \)">
+      <input id="bOmega${i}" size="4" placeholder="ω">
       <span style="font-size: 0.9em; color: #555;">e.g., <code>1.23</code>, <code>123.4567</code>, or <code>5</code></span>
       <button onclick="addGate(${i}, 'B')">Add B</button>
 
@@ -114,7 +114,6 @@ function renderUI() {
     div.appendChild(el);
   });
 
-  MathJax.typeset();
 }
 
 function deleteGate(i) {
