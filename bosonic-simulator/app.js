@@ -251,8 +251,9 @@ function renderInputs() {
   mAmp.value = state.measurement.amplitude
     .map(([re, im]) => `${re}+${im}i`)
     .join(",");
-  mUseRandomized.checked = !!state.measurement.use_randomized;
+  mUseRandomized.checked = state.measurement.use_randomized;
   mEnergyUpperBound.value = state.measurement.energy_upper_bound;
+  toggleRandAlgoOptions();
 
   plotWires.value = state.plot.wires.join(",");
   plotResolution.value = state.plot.resolution;
@@ -349,8 +350,9 @@ async function normalizeSuperposition() {
   loadURL();
 }
 
-function triggerEnergyUpperBoundDisplay(){
-  mEnergyUpperBound.style.style.display = (mUseRandomized.checked ? "block":"none")
+function toggleRandAlgoOptions(){
+  mEnergyUpperBound.style.display = (mUseRandomized.checked ? "block":"none")
+  mRandAlgoComment.style.display = (mUseRandomized.checked ? "block":"none")
 }
 
 /* ---------- Spinner ---------- */

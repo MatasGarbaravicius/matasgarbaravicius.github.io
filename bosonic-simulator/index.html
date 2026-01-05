@@ -131,12 +131,17 @@ Beamsplitter:
 Wires: <input id="mWires" value="0">
 Amplitude: <input id="mAmp" value="1+0i">
 <label style="margin-left: 10px; font-size: 0.9em">
-  <input type="checkbox" id="mUseRandomized" style="width: 16px">
+  <input type="checkbox" id="mUseRandomized" style="width: 16px" onchange="toggleRandAlgoOptions()">
 </label>
 use a randomized algorithm
 <label style="margin-left: 10px">
   Energy Upper Bound: <input id="mEnergyUpperBound" value="10">
 </label>
+<p style="font-size: 0.85em; color: #666; margin-top: 6px;" id = "mRandAlgoComment">
+  Assuming the post-measurement state energy is bounded by the specified value,
+  the randomized algorithm returns, with probability at least 75%, an estimate
+  with multiplicative error at most 75%.
+</p>
 <hr>
 
 <button onclick="simulate()">Simulate</button>
