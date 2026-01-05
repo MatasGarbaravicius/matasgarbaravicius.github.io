@@ -9,7 +9,8 @@ let state = {
   measurement: {
     wires: [0],
     amplitude: [[1, 0]],
-    use_randomized: false
+    use_randomized: false,
+    energy_upper_bound: 10
   },
   plot: {
     wires: [0],
@@ -251,6 +252,7 @@ function renderInputs() {
     .map(([re, im]) => `${re}+${im}i`)
     .join(",");
   mUseRandomized.checked = !!state.measurement.use_randomized;
+  mEnergyUpperBound.value = state.measurement.energy_upper_bound;
 
   plotWires.value = state.plot.wires.join(",");
   plotResolution.value = state.plot.resolution;
@@ -275,6 +277,8 @@ async function simulate() {
     });
 
   state.measurement.use_randomized = mUseRandomized.checked;
+
+  state.measurement.energy_upper_bound = mEnergyUpperBound.value;
 
   saveURL();
 
@@ -343,6 +347,10 @@ async function normalizeSuperposition() {
   saveURL();
 
   loadURL();
+}
+
+function triggerEnergyUpperBoundDisplay(){
+  mEnergyUpperBound.style.style.display = (mUseRandomized.checked ? "block":"none")
 }
 
 /* ---------- Spinner ---------- */

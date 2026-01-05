@@ -20,7 +20,7 @@
       <li><strong>Prepare Gaussian States for Superposition:</strong> Start with a vacuum state and apply a series of Gaussian unitaries to create individual Gaussian states. These states are then used as the building blocks for your quantum superposition (see sections <i>Supported Gaussian Unitaries</i> and <i>Superposition Terms</i>).</li>
       <li><strong>Build Superpositions:</strong> Combine the prepared Gaussian states into a quantum superposition, where each state is weighted by a complex coefficient. This allows you to represent a range of quantum states (see section <i>Superposition Terms</i>).</li>
       <li><strong>Apply Global Unitaries:</strong> Apply additional Gaussian unitaries to the entire superposition of states, modifying the overall quantum state (see section <i>Global Circuit</i>).</li>
-      <li><strong>Perform Measurements:</strong> After applying global unitaries, perform quantum measurements on the resulting state. You can measure the probability of specific outcomes or visualize the probability density function of modes (see sections <i>Measurements</i> and <i>Phase-space Plots</i>).</li>
+      <li><strong>Perform Measurements:</strong> After applying global unitaries, perform quantum measurements on the resulting state. You can measure the probability of specific outcomes or visualize the probability density function of modes (see sections <i>Measurements</i> and <i>Phase-Space Plots</i>).</li>
   </ul>
 
 
@@ -133,7 +133,10 @@ Amplitude: <input id="mAmp" value="1+0i">
 <label style="margin-left: 10px; font-size: 0.9em">
   <input type="checkbox" id="mUseRandomized" style="width: 16px">
 </label>
-use a randomized algorithm (multiplicative error usually ~15–75%)
+use a randomized algorithm
+<label style="margin-left: 10px">
+  Energy Upper Bound: <input id="mEnergyUpperBound" value="10">
+</label>
 <hr>
 
 <button onclick="simulate()">Simulate</button>
@@ -141,7 +144,7 @@ use a randomized algorithm (multiplicative error usually ~15–75%)
 
 <hr>
 
-<h2>Phase-space Plots</h2>
+<h2>Phase-Space Plots</h2>
 
 Wires:
 <input id="plotWires" value="0">
