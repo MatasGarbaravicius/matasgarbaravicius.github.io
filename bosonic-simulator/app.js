@@ -274,7 +274,7 @@ async function simulate() {
       return [parseFloat(re), parseFloat(im)];
     });
 
-  state.measurement.use_randomized = mUseRandomized.value;
+  state.measurement.use_randomized = mUseRandomized.checked;
 
   saveURL();
 
