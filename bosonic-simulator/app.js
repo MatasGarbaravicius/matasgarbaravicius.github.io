@@ -250,7 +250,7 @@ function renderInputs() {
   mAmp.value = state.measurement.amplitude
     .map(([re, im]) => `${re}+${im}i`)
     .join(",");
-  use_randomized.checked = !!state.measurement.use_randomized;
+  mUseRandomized.checked = !!state.measurement.use_randomized;
 
   plotWires.value = state.plot.wires.join(",");
   plotResolution.value = state.plot.resolution;
