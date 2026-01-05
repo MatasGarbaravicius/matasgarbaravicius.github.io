@@ -8,7 +8,8 @@ let state = {
   global_gates: [],
   measurement: {
     wires: [0],
-    amplitude: [[1, 0]]
+    amplitude: [[1, 0]],
+    use_randomized: false
   },
   plot: {
     wires: [0],
@@ -48,8 +49,8 @@ function addTerm() {
   loadURL();
 }
 
-function removeTerm(i){
-  state.superposition.splice(i,1);
+function removeTerm(i) {
+  state.superposition.splice(i, 1);
   saveURL();
   loadURL();
 }
@@ -221,7 +222,7 @@ function deleteGlobalGate() {
 async function renderTerm(i) {
   const res = await fetch(BACKEND + "/render_term", {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       index: i,
       num_wires: state.num_wires,
@@ -235,7 +236,7 @@ async function renderTerm(i) {
 async function renderGlobal() {
   const res = await fetch(BACKEND + "/render_global", {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       num_wires: state.num_wires,
       gates: state.global_gates
@@ -249,6 +250,7 @@ function renderInputs() {
   mAmp.value = state.measurement.amplitude
     .map(([re, im]) => `${re}+${im}i`)
     .join(",");
+  use_randomized.checked = !!state.measurement.use_randomized;
 
   plotWires.value = state.plot.wires.join(",");
   plotResolution.value = state.plot.resolution;
@@ -272,17 +274,25 @@ async function simulate() {
       return [parseFloat(re), parseFloat(im)];
     });
 
+  state.measurement.use_randomized = mUseRandomized.value;
+
   saveURL();
 
   const res = await fetch(BACKEND + "/simulate", {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(state)
   });
 
   const data = await res.json();
   output.textContent =
-    data.error ? data.error : "Probability density value: " + data.probability;
+    data.error
+      ? data.error
+      : "Probability density value: " + data.probability +
+      (state.measurement.use_randomized
+        ? "\nRandomized algorithm value: " + data.approximate_probability +
+        "\n(Signed) multiplicative error: " + data.signed_multiplicative_error 
+        : "");
 }
 
 async function generatePlots() {
@@ -293,7 +303,7 @@ async function generatePlots() {
 
   const res = await fetch(BACKEND + "/plot", {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(state)
   });
 
@@ -322,7 +332,7 @@ async function generatePlots() {
 async function normalizeSuperposition() {
   const res = await fetch(BACKEND + "/normalize", {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(state)
   });
 
@@ -338,11 +348,11 @@ async function normalizeSuperposition() {
 /* ---------- Spinner ---------- */
 
 function showSpinner() {
-    document.getElementById("spinner").style.display = "block";
+  document.getElementById("spinner").style.display = "block";
 }
 
 function hideSpinner() {
-    document.getElementById("spinner").style.display = "none";
+  document.getElementById("spinner").style.display = "none";
 }
 
 // Store the original fetch function
@@ -350,17 +360,17 @@ const originalFetch = window.fetch;
 
 // Override the global fetch
 window.fetch = async function (...args) {
-    showSpinner(); // Show spinner before the fetch starts
+  showSpinner(); // Show spinner before the fetch starts
 
-    try {
-        const response = await originalFetch(...args);
-        return response;
-    } catch (error) {
-        console.error('Fetch error:', error);
-        throw error;
-    } finally {
-        hideSpinner(); // Hide spinner after the fetch ends (success or failure)
-    }
+  try {
+    const response = await originalFetch(...args);
+    return response;
+  } catch (error) {
+    console.error('Fetch error:', error);
+    throw error;
+  } finally {
+    hideSpinner(); // Hide spinner after the fetch ends (success or failure)
+  }
 };
 
 
