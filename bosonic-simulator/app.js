@@ -252,7 +252,7 @@ function renderInputs() {
     .map(([re, im]) => `${re}+${im}i`)
     .join(",");
   mUseRandomized.checked = state.measurement.use_randomized;
-  mEnergyUpperBound.value = state.measurement.energy_upper_bound;
+  mEnergyUpperBound.value = parseFloat(state.measurement.energy_upper_bound);
   toggleRandAlgoOptions();
 
   plotWires.value = state.plot.wires.join(",");
