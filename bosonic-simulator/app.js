@@ -295,8 +295,12 @@ async function simulate() {
       ? data.error
       : "Probability density value: " + data.probability +
       (state.measurement.use_randomized
-        ? "\nRandomized algorithm value: " + data.approximate_probability +
-        "\n(Signed) multiplicative error: " + data.signed_multiplicative_error 
+        ? (
+          state.num_wires == 1
+            ? "\nRandomized algorithm value: " + data.approximate_probability +
+            "\n(Signed) multiplicative error: " + data.signed_multiplicative_error
+            : "No randomized algorithm output: only enabled for single-mode systems"
+        )
         : "");
 }
 
@@ -350,9 +354,9 @@ async function normalizeSuperposition() {
   loadURL();
 }
 
-function toggleRandAlgoOptions(){
-  mEnergyUpperBoundLabel.style.display = (mUseRandomized.checked ? "inline":"none")
-  mRandAlgoComment.style.display = (mUseRandomized.checked ? "block":"none")
+function toggleRandAlgoOptions() {
+  mEnergyUpperBoundLabel.style.display = (mUseRandomized.checked ? "inline" : "none")
+  mRandAlgoComment.style.display = (mUseRandomized.checked ? "block" : "none")
 }
 
 /* ---------- Spinner ---------- */
