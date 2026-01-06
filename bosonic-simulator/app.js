@@ -351,7 +351,7 @@ async function normalizeSuperposition() {
 }
 
 function toggleRandAlgoOptions(){
-  mEnergyUpperBound.style.display = (mUseRandomized.checked ? "inline":"none")
+  mEnergyUpperBoundLabel.style.display = (mUseRandomized.checked ? "inline":"none")
   mRandAlgoComment.style.display = (mUseRandomized.checked ? "block":"none")
 }
 
