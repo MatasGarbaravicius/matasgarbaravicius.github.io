@@ -299,7 +299,7 @@ async function simulate() {
           state.num_wires == 1
             ? "\nRandomized algorithm value: " + data.approximate_probability +
             "\n(Signed) multiplicative error: " + data.signed_multiplicative_error
-            : "No randomized algorithm output: only enabled for single-mode systems"
+            : "\nNo randomized algorithm output: only enabled for single-mode systems"
         )
         : "");
 }
