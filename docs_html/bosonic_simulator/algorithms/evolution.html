@@ -154,7 +154,7 @@
 </span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a>
 </span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a>    <span class="c1"># compute gamma_prime_prime</span>
 </span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a>
-</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a>    <span class="n">gamma_prime_prime</span> <span class="o">=</span> <span class="n">identity_n</span>
+</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a>    <span class="n">gamma_prime_prime</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">identity_n</span><span class="p">)</span>
 </span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a>    <span class="n">gamma_prime_prime</span><span class="p">[</span><span class="n">block_slice</span><span class="p">,</span> <span class="n">block_slice</span><span class="p">]</span> <span class="o">=</span> <span class="n">s_block</span> <span class="o">@</span> <span class="n">s_block</span><span class="o">.</span><span class="n">T</span>
 </span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a>
 </span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a>    <span class="c1"># compute alpha_prime</span>
@@ -168,7 +168,7 @@
 </span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a>    <span class="n">d1</span> <span class="o">=</span> <span class="n">d2</span> <span class="o">=</span> <span class="n">d3</span> <span class="o">=</span> <span class="n">dhat_alpha_prime</span>
 </span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a>    <span class="n">gamma1</span><span class="p">,</span> <span class="n">gamma2</span><span class="p">,</span> <span class="n">gamma3</span> <span class="o">=</span> <span class="n">gamma_prime_prime</span><span class="p">,</span> <span class="n">identity_n</span><span class="p">,</span> <span class="n">gamma_prime</span>
 </span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a>    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a>    <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a>    <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">z</span><span class="p">)))</span>
 </span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a>    <span class="n">zero_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">)</span>
 </span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a>    <span class="n">r_prime</span> <span class="o">=</span> <span class="n">overlaptriple</span><span class="p">(</span><span class="n">gamma1</span><span class="p">,</span> <span class="n">gamma2</span><span class="p">,</span> <span class="n">gamma3</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">,</span> <span class="n">d3</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">zero_vector</span><span class="p">)</span>
 </span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a>
@@ -213,9 +213,9 @@
 </span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a>
 </span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a>        <span class="k">case</span> <span class="n">gu_description</span><span class="o">.</span><span class="n">DisplacementDescription</span><span class="p">(</span><span class="n">beta</span><span class="p">):</span>
 </span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a>            <span class="n">alpha</span> <span class="o">=</span> <span class="n">gsd</span><span class="o">.</span><span class="n">amplitude</span>
-</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a>            <span class="n">exponent</span> <span class="o">=</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">beta</span><span class="p">))</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
-</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a>            <span class="n">alpha_prime</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">exponent</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">-</span> <span class="n">beta</span><span class="p">)</span>
-</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a>            <span class="n">gsd</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">alpha_prime</span>
+</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a>            <span class="n">exponent</span> <span class="o">=</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">beta</span><span class="p">)))</span>
+</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a>            <span class="n">gsd</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">-</span> <span class="n">beta</span>
+</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a>            <span class="n">gsd</span><span class="o">.</span><span class="n">overlap</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">exponent</span><span class="p">)</span>
 </span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a>
 </span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a>        <span class="k">case</span> <span class="n">gu_description</span><span class="o">.</span><span class="n">PhaseShiftDescription</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
 </span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a>            <span class="c1"># --- update amplitude ---</span>
@@ -242,111 +242,95 @@
 </span><span id="L-155"><a href="#L-155"><span class="linenos">155</span></a>
 </span><span id="L-156"><a href="#L-156"><span class="linenos">156</span></a>            <span class="c1"># --- update covariance matrix ---</span>
 </span><span id="L-157"><a href="#L-157"><span class="linenos">157</span></a>            <span class="n">gamma</span> <span class="o">=</span> <span class="n">gsd</span><span class="o">.</span><span class="n">covariance_matrix</span>
-</span><span id="L-158"><a href="#L-158"><span class="linenos">158</span></a>            <span class="n">s_block</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-</span><span id="L-159"><a href="#L-159"><span class="linenos">159</span></a>                <span class="p">[</span>
-</span><span id="L-160"><a href="#L-160"><span class="linenos">160</span></a>                    <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">w</span><span class="p">)],</span>
-</span><span id="L-161"><a href="#L-161"><span class="linenos">161</span></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
-</span><span id="L-162"><a href="#L-162"><span class="linenos">162</span></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
-</span><span id="L-163"><a href="#L-163"><span class="linenos">163</span></a>                    <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">w</span><span class="p">)],</span>
-</span><span id="L-164"><a href="#L-164"><span class="linenos">164</span></a>                <span class="p">]</span>
-</span><span id="L-165"><a href="#L-165"><span class="linenos">165</span></a>            <span class="p">)</span>
-</span><span id="L-166"><a href="#L-166"><span class="linenos">166</span></a>            <span class="n">block_indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">j</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">k</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
-</span><span id="L-167"><a href="#L-167"><span class="linenos">167</span></a>            <span class="c1"># multiply by S from the left</span>
-</span><span id="L-168"><a href="#L-168"><span class="linenos">168</span></a>            <span class="n">gamma</span><span class="p">[</span><span class="n">block_indices</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">s_block</span> <span class="o">@</span> <span class="n">gamma</span><span class="p">[</span><span class="n">block_indices</span><span class="p">,</span> <span class="p">:]</span>
-</span><span id="L-169"><a href="#L-169"><span class="linenos">169</span></a>            <span class="c1"># multiply by S^T from the right</span>
-</span><span id="L-170"><a href="#L-170"><span class="linenos">170</span></a>            <span class="n">gamma</span><span class="p">[:,</span> <span class="n">block_indices</span><span class="p">]</span> <span class="o">=</span> <span class="n">gamma</span><span class="p">[:,</span> <span class="n">block_indices</span><span class="p">]</span> <span class="o">@</span> <span class="n">s_block</span><span class="o">.</span><span class="n">T</span>
-</span><span id="L-171"><a href="#L-171"><span class="linenos">171</span></a>
+</span><span id="L-158"><a href="#L-158"><span class="linenos">158</span></a>            <span class="n">c</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+</span><span id="L-159"><a href="#L-159"><span class="linenos">159</span></a>            <span class="n">s_block</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+</span><span id="L-160"><a href="#L-160"><span class="linenos">160</span></a>                <span class="p">[</span>
+</span><span id="L-161"><a href="#L-161"><span class="linenos">161</span></a>                    <span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">s</span><span class="p">],</span>
+</span><span id="L-162"><a href="#L-162"><span class="linenos">162</span></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="o">-</span><span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+</span><span id="L-163"><a href="#L-163"><span class="linenos">163</span></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+</span><span id="L-164"><a href="#L-164"><span class="linenos">164</span></a>                    <span class="p">[</span><span class="o">-</span><span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="p">],</span>
+</span><span id="L-165"><a href="#L-165"><span class="linenos">165</span></a>                <span class="p">]</span>
+</span><span id="L-166"><a href="#L-166"><span class="linenos">166</span></a>            <span class="p">)</span>
+</span><span id="L-167"><a href="#L-167"><span class="linenos">167</span></a>            <span class="n">block_indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">j</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">k</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+</span><span id="L-168"><a href="#L-168"><span class="linenos">168</span></a>            <span class="c1"># multiply by S from the left</span>
+</span><span id="L-169"><a href="#L-169"><span class="linenos">169</span></a>            <span class="n">gamma</span><span class="p">[</span><span class="n">block_indices</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">s_block</span> <span class="o">@</span> <span class="n">gamma</span><span class="p">[</span><span class="n">block_indices</span><span class="p">,</span> <span class="p">:]</span>
+</span><span id="L-170"><a href="#L-170"><span class="linenos">170</span></a>            <span class="c1"># multiply by S^T from the right</span>
+</span><span id="L-171"><a href="#L-171"><span class="linenos">171</span></a>            <span class="n">gamma</span><span class="p">[:,</span> <span class="n">block_indices</span><span class="p">]</span> <span class="o">=</span> <span class="n">gamma</span><span class="p">[:,</span> <span class="n">block_indices</span><span class="p">]</span> <span class="o">@</span> <span class="n">s_block</span><span class="o">.</span><span class="n">T</span>
 </span><span id="L-172"><a href="#L-172"><span class="linenos">172</span></a>
-</span><span id="L-173"><a href="#L-173"><span class="linenos">173</span></a><span class="k">def</span><span class="w"> </span><span class="nf">applyunitary</span><span class="p">(</span>
-</span><span id="L-174"><a href="#L-174"><span class="linenos">174</span></a>    <span class="n">gaussian_state_description</span><span class="p">:</span> <span class="n">GaussianStateDescription</span><span class="p">,</span>
-</span><span id="L-175"><a href="#L-175"><span class="linenos">175</span></a>    <span class="n">gaussian_unitary_description</span><span class="p">:</span> <span class="n">gu_description</span><span class="o">.</span><span class="n">GaussianUnitaryDescription</span><span class="p">,</span>
-</span><span id="L-176"><a href="#L-176"><span class="linenos">176</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GaussianStateDescription</span><span class="p">:</span>
-</span><span id="L-177"><a href="#L-177"><span class="linenos">177</span></a><span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-178"><a href="#L-178"><span class="linenos">178</span></a><span class="sd">    Returns a new description of a Gaussian state after applying a Gaussian unitary.</span>
-</span><span id="L-179"><a href="#L-179"><span class="linenos">179</span></a>
-</span><span id="L-180"><a href="#L-180"><span class="linenos">180</span></a><span class="sd">    This is a wrapper around `applyunitary_inplace` that preserves the original</span>
-</span><span id="L-181"><a href="#L-181"><span class="linenos">181</span></a><span class="sd">    state description by performing a deep copy before applying the operation.</span>
-</span><span id="L-182"><a href="#L-182"><span class="linenos">182</span></a>
-</span><span id="L-183"><a href="#L-183"><span class="linenos">183</span></a><span class="sd">    **Runtime:**</span>
-</span><span id="L-184"><a href="#L-184"><span class="linenos">184</span></a>
-</span><span id="L-185"><a href="#L-185"><span class="linenos">185</span></a><span class="sd">    * **Squeezing:** $O(n^3)$.</span>
-</span><span id="L-186"><a href="#L-186"><span class="linenos">186</span></a><span class="sd">    * **Others:** $O(n^2)$. While the arithmetic updates for displacements, phase shifts,</span>
-</span><span id="L-187"><a href="#L-187"><span class="linenos">187</span></a><span class="sd">      and beam splitters are $O(n)$, this function requires $O(n^2)$ time to allocate</span>
-</span><span id="L-188"><a href="#L-188"><span class="linenos">188</span></a><span class="sd">      and copy the $2n \times 2n$ covariance matrix.</span>
-</span><span id="L-189"><a href="#L-189"><span class="linenos">189</span></a>
-</span><span id="L-190"><a href="#L-190"><span class="linenos">190</span></a><span class="sd">    Parameters</span>
-</span><span id="L-191"><a href="#L-191"><span class="linenos">191</span></a><span class="sd">    ----------</span>
-</span><span id="L-192"><a href="#L-192"><span class="linenos">192</span></a><span class="sd">    gaussian_state_description : GaussianStateDescription</span>
-</span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a><span class="sd">        The initial state description.</span>
-</span><span id="L-194"><a href="#L-194"><span class="linenos">194</span></a><span class="sd">    gaussian_unitary_description : GaussianUnitaryDescription</span>
-</span><span id="L-195"><a href="#L-195"><span class="linenos">195</span></a><span class="sd">        The unitary operation to apply.</span>
-</span><span id="L-196"><a href="#L-196"><span class="linenos">196</span></a>
-</span><span id="L-197"><a href="#L-197"><span class="linenos">197</span></a><span class="sd">    Returns</span>
-</span><span id="L-198"><a href="#L-198"><span class="linenos">198</span></a><span class="sd">    -------</span>
-</span><span id="L-199"><a href="#L-199"><span class="linenos">199</span></a><span class="sd">    GaussianStateDescription</span>
-</span><span id="L-200"><a href="#L-200"><span class="linenos">200</span></a><span class="sd">        The new description of the evolved state.</span>
-</span><span id="L-201"><a href="#L-201"><span class="linenos">201</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-202"><a href="#L-202"><span class="linenos">202</span></a>    <span class="n">gsd_copy</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">gaussian_state_description</span><span class="p">)</span>
-</span><span id="L-203"><a href="#L-203"><span class="linenos">203</span></a>    <span class="n">applyunitary_inplace</span><span class="p">(</span><span class="n">gsd_copy</span><span class="p">,</span> <span class="n">gaussian_unitary_description</span><span class="p">)</span>
-</span><span id="L-204"><a href="#L-204"><span class="linenos">204</span></a>    <span class="k">return</span> <span class="n">gsd_copy</span>
-</span><span id="L-205"><a href="#L-205"><span class="linenos">205</span></a>
+</span><span id="L-173"><a href="#L-173"><span class="linenos">173</span></a>
+</span><span id="L-174"><a href="#L-174"><span class="linenos">174</span></a><span class="k">def</span><span class="w"> </span><span class="nf">applyunitary</span><span class="p">(</span>
+</span><span id="L-175"><a href="#L-175"><span class="linenos">175</span></a>    <span class="n">gaussian_state_description</span><span class="p">:</span> <span class="n">GaussianStateDescription</span><span class="p">,</span>
+</span><span id="L-176"><a href="#L-176"><span class="linenos">176</span></a>    <span class="n">gaussian_unitary_description</span><span class="p">:</span> <span class="n">gu_description</span><span class="o">.</span><span class="n">GaussianUnitaryDescription</span><span class="p">,</span>
+</span><span id="L-177"><a href="#L-177"><span class="linenos">177</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GaussianStateDescription</span><span class="p">:</span>
+</span><span id="L-178"><a href="#L-178"><span class="linenos">178</span></a><span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-179"><a href="#L-179"><span class="linenos">179</span></a><span class="sd">    Returns a new description of a Gaussian state after applying a Gaussian unitary.</span>
+</span><span id="L-180"><a href="#L-180"><span class="linenos">180</span></a>
+</span><span id="L-181"><a href="#L-181"><span class="linenos">181</span></a><span class="sd">    This is a wrapper around `applyunitary_inplace` that preserves the original</span>
+</span><span id="L-182"><a href="#L-182"><span class="linenos">182</span></a><span class="sd">    state description by performing a deep copy before applying the operation.</span>
+</span><span id="L-183"><a href="#L-183"><span class="linenos">183</span></a>
+</span><span id="L-184"><a href="#L-184"><span class="linenos">184</span></a><span class="sd">    **Runtime:**</span>
+</span><span id="L-185"><a href="#L-185"><span class="linenos">185</span></a>
+</span><span id="L-186"><a href="#L-186"><span class="linenos">186</span></a><span class="sd">    * **Squeezing:** $O(n^3)$.</span>
+</span><span id="L-187"><a href="#L-187"><span class="linenos">187</span></a><span class="sd">    * **Others:** $O(n^2)$. While the arithmetic updates for displacements, phase shifts,</span>
+</span><span id="L-188"><a href="#L-188"><span class="linenos">188</span></a><span class="sd">      and beam splitters are $O(n)$, this function requires $O(n^2)$ time to allocate</span>
+</span><span id="L-189"><a href="#L-189"><span class="linenos">189</span></a><span class="sd">      and copy the $2n \times 2n$ covariance matrix.</span>
+</span><span id="L-190"><a href="#L-190"><span class="linenos">190</span></a>
+</span><span id="L-191"><a href="#L-191"><span class="linenos">191</span></a><span class="sd">    Parameters</span>
+</span><span id="L-192"><a href="#L-192"><span class="linenos">192</span></a><span class="sd">    ----------</span>
+</span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a><span class="sd">    gaussian_state_description : GaussianStateDescription</span>
+</span><span id="L-194"><a href="#L-194"><span class="linenos">194</span></a><span class="sd">        The initial state description.</span>
+</span><span id="L-195"><a href="#L-195"><span class="linenos">195</span></a><span class="sd">    gaussian_unitary_description : GaussianUnitaryDescription</span>
+</span><span id="L-196"><a href="#L-196"><span class="linenos">196</span></a><span class="sd">        The unitary operation to apply.</span>
+</span><span id="L-197"><a href="#L-197"><span class="linenos">197</span></a>
+</span><span id="L-198"><a href="#L-198"><span class="linenos">198</span></a><span class="sd">    Returns</span>
+</span><span id="L-199"><a href="#L-199"><span class="linenos">199</span></a><span class="sd">    -------</span>
+</span><span id="L-200"><a href="#L-200"><span class="linenos">200</span></a><span class="sd">    GaussianStateDescription</span>
+</span><span id="L-201"><a href="#L-201"><span class="linenos">201</span></a><span class="sd">        The new description of the evolved state.</span>
+</span><span id="L-202"><a href="#L-202"><span class="linenos">202</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-203"><a href="#L-203"><span class="linenos">203</span></a>    <span class="n">gsd_copy</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">gaussian_state_description</span><span class="p">)</span>
+</span><span id="L-204"><a href="#L-204"><span class="linenos">204</span></a>    <span class="n">applyunitary_inplace</span><span class="p">(</span><span class="n">gsd_copy</span><span class="p">,</span> <span class="n">gaussian_unitary_description</span><span class="p">)</span>
+</span><span id="L-205"><a href="#L-205"><span class="linenos">205</span></a>    <span class="k">return</span> <span class="n">gsd_copy</span>
 </span><span id="L-206"><a href="#L-206"><span class="linenos">206</span></a>
-</span><span id="L-207"><a href="#L-207"><span class="linenos">207</span></a><span class="k">def</span><span class="w"> </span><span class="nf">applyunitaries</span><span class="p">(</span>
-</span><span id="L-208"><a href="#L-208"><span class="linenos">208</span></a>    <span class="n">gaussian_state_description</span><span class="p">:</span> <span class="n">GaussianStateDescription</span><span class="p">,</span>
-</span><span id="L-209"><a href="#L-209"><span class="linenos">209</span></a>    <span class="n">gaussian_unitary_descriptions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">GaussianUnitaryDescription</span><span class="p">],</span>
-</span><span id="L-210"><a href="#L-210"><span class="linenos">210</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GaussianStateDescription</span><span class="p">:</span>
-</span><span id="L-211"><a href="#L-211"><span class="linenos">211</span></a><span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-212"><a href="#L-212"><span class="linenos">212</span></a><span class="sd">    Applies a sequence of Gaussian unitary operations to a Gaussian state.</span>
-</span><span id="L-213"><a href="#L-213"><span class="linenos">213</span></a>
-</span><span id="L-214"><a href="#L-214"><span class="linenos">214</span></a><span class="sd">    This function is not described in the reference paper. It sequentially applies a</span>
-</span><span id="L-215"><a href="#L-215"><span class="linenos">215</span></a><span class="sd">    list of Gaussian unitaries to a state, returning a new state description representing</span>
-</span><span id="L-216"><a href="#L-216"><span class="linenos">216</span></a><span class="sd">    the evolved state:</span>
-</span><span id="L-217"><a href="#L-217"><span class="linenos">217</span></a>
-</span><span id="L-218"><a href="#L-218"><span class="linenos">218</span></a><span class="sd">    $$</span>
-</span><span id="L-219"><a href="#L-219"><span class="linenos">219</span></a><span class="sd">    |\psi_{\text{final}}\rangle = U_T \dots U_1 |\psi_{\text{initial}}\rangle</span>
-</span><span id="L-220"><a href="#L-220"><span class="linenos">220</span></a><span class="sd">    $$</span>
-</span><span id="L-221"><a href="#L-221"><span class="linenos">221</span></a>
-</span><span id="L-222"><a href="#L-222"><span class="linenos">222</span></a><span class="sd">    where $U_1$ is the first element of the list and $U_T$ is the last.</span>
-</span><span id="L-223"><a href="#L-223"><span class="linenos">223</span></a>
-</span><span id="L-224"><a href="#L-224"><span class="linenos">224</span></a><span class="sd">    **Runtime:**</span>
-</span><span id="L-225"><a href="#L-225"><span class="linenos">225</span></a>
-</span><span id="L-226"><a href="#L-226"><span class="linenos">226</span></a><span class="sd">    * **General case (with squeezing):** $O(T n^3)$, where $T$ is the number of unitaries and $n$ is the number of modes.</span>
-</span><span id="L-227"><a href="#L-227"><span class="linenos">227</span></a><span class="sd">    * **Without squeezing:** $O(n^2 + T n)$. The complexity is dominated by the single initial deep copy of the state ($O(n^2)$), followed by efficient $O(n)$ in-place updates for displacement, phase shift, and beam splitter operations.</span>
-</span><span id="L-228"><a href="#L-228"><span class="linenos">228</span></a>
-</span><span id="L-229"><a href="#L-229"><span class="linenos">229</span></a><span class="sd">    Parameters</span>
-</span><span id="L-230"><a href="#L-230"><span class="linenos">230</span></a><span class="sd">    ----------</span>
-</span><span id="L-231"><a href="#L-231"><span class="linenos">231</span></a><span class="sd">    gaussian_state_description : GaussianStateDescription</span>
-</span><span id="L-232"><a href="#L-232"><span class="linenos">232</span></a><span class="sd">        The description of the initial state.</span>
-</span><span id="L-233"><a href="#L-233"><span class="linenos">233</span></a><span class="sd">    gaussian_unitary_descriptions : list[GaussianUnitaryDescription]</span>
-</span><span id="L-234"><a href="#L-234"><span class="linenos">234</span></a><span class="sd">        The ordered list of Gaussian unitaries to apply.</span>
-</span><span id="L-235"><a href="#L-235"><span class="linenos">235</span></a>
-</span><span id="L-236"><a href="#L-236"><span class="linenos">236</span></a><span class="sd">    Returns</span>
-</span><span id="L-237"><a href="#L-237"><span class="linenos">237</span></a><span class="sd">    -------</span>
-</span><span id="L-238"><a href="#L-238"><span class="linenos">238</span></a><span class="sd">    GaussianStateDescription</span>
-</span><span id="L-239"><a href="#L-239"><span class="linenos">239</span></a><span class="sd">        The description of the final state after applying all unitaries.</span>
-</span><span id="L-240"><a href="#L-240"><span class="linenos">240</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-241"><a href="#L-241"><span class="linenos">241</span></a>    <span class="n">gsd</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">gaussian_state_description</span><span class="p">)</span>
-</span><span id="L-242"><a href="#L-242"><span class="linenos">242</span></a>    <span class="k">for</span> <span class="n">unitary_description</span> <span class="ow">in</span> <span class="n">gaussian_unitary_descriptions</span><span class="p">:</span>
-</span><span id="L-243"><a href="#L-243"><span class="linenos">243</span></a>        <span class="n">applyunitary_inplace</span><span class="p">(</span><span class="n">gsd</span><span class="p">,</span> <span class="n">unitary_description</span><span class="p">)</span>
-</span><span id="L-244"><a href="#L-244"><span class="linenos">244</span></a>
-</span><span id="L-245"><a href="#L-245"><span class="linenos">245</span></a>    <span class="k">return</span> <span class="n">gsd</span>
-</span><span id="L-246"><a href="#L-246"><span class="linenos">246</span></a>
-</span><span id="L-247"><a href="#L-247"><span class="linenos">247</span></a>
-</span><span id="L-248"><a href="#L-248"><span class="linenos">248</span></a><span class="c1"># import bosonic_simulator.gaussian_unitary_description as gud</span>
-</span><span id="L-249"><a href="#L-249"><span class="linenos">249</span></a><span class="c1"># import numpy as np</span>
-</span><span id="L-250"><a href="#L-250"><span class="linenos">250</span></a><span class="c1"># from bosonic_simulator.algorithms.plotprobexact import plotprobexact</span>
-</span><span id="L-251"><a href="#L-251"><span class="linenos">251</span></a>
-</span><span id="L-252"><a href="#L-252"><span class="linenos">252</span></a><span class="c1"># gsd = GaussianStateDescription.vacuum_state(1)</span>
-</span><span id="L-253"><a href="#L-253"><span class="linenos">253</span></a><span class="c1"># gsd = applyunitaries(</span>
-</span><span id="L-254"><a href="#L-254"><span class="linenos">254</span></a><span class="c1">#     gsd,</span>
-</span><span id="L-255"><a href="#L-255"><span class="linenos">255</span></a><span class="c1">#     [</span>
-</span><span id="L-256"><a href="#L-256"><span class="linenos">256</span></a><span class="c1">#         gud.DisplacementDescription(np.array([1 + 1j])),</span>
-</span><span id="L-257"><a href="#L-257"><span class="linenos">257</span></a><span class="c1">#         # gud.DisplacementDescription(np.array([-1 + -1j])),</span>
-</span><span id="L-258"><a href="#L-258"><span class="linenos">258</span></a><span class="c1">#     ],</span>
-</span><span id="L-259"><a href="#L-259"><span class="linenos">259</span></a><span class="c1"># )</span>
-</span><span id="L-260"><a href="#L-260"><span class="linenos">260</span></a><span class="c1"># plotprobexact(</span>
-</span><span id="L-261"><a href="#L-261"><span class="linenos">261</span></a><span class="c1">#     superposition_terms=[(np.complex128(1.0), gsd)], mode_index=0, resolution=20</span>
-</span><span id="L-262"><a href="#L-262"><span class="linenos">262</span></a><span class="c1"># )</span>
+</span><span id="L-207"><a href="#L-207"><span class="linenos">207</span></a>
+</span><span id="L-208"><a href="#L-208"><span class="linenos">208</span></a><span class="k">def</span><span class="w"> </span><span class="nf">applyunitaries</span><span class="p">(</span>
+</span><span id="L-209"><a href="#L-209"><span class="linenos">209</span></a>    <span class="n">gaussian_state_description</span><span class="p">:</span> <span class="n">GaussianStateDescription</span><span class="p">,</span>
+</span><span id="L-210"><a href="#L-210"><span class="linenos">210</span></a>    <span class="n">gaussian_unitary_descriptions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">GaussianUnitaryDescription</span><span class="p">],</span>
+</span><span id="L-211"><a href="#L-211"><span class="linenos">211</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GaussianStateDescription</span><span class="p">:</span>
+</span><span id="L-212"><a href="#L-212"><span class="linenos">212</span></a><span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-213"><a href="#L-213"><span class="linenos">213</span></a><span class="sd">    Applies a sequence of Gaussian unitary operations to a Gaussian state.</span>
+</span><span id="L-214"><a href="#L-214"><span class="linenos">214</span></a>
+</span><span id="L-215"><a href="#L-215"><span class="linenos">215</span></a><span class="sd">    This function is not described in the reference paper. It sequentially applies a</span>
+</span><span id="L-216"><a href="#L-216"><span class="linenos">216</span></a><span class="sd">    list of Gaussian unitaries to a state, returning a new state description representing</span>
+</span><span id="L-217"><a href="#L-217"><span class="linenos">217</span></a><span class="sd">    the evolved state:</span>
+</span><span id="L-218"><a href="#L-218"><span class="linenos">218</span></a>
+</span><span id="L-219"><a href="#L-219"><span class="linenos">219</span></a><span class="sd">    $$</span>
+</span><span id="L-220"><a href="#L-220"><span class="linenos">220</span></a><span class="sd">    |\psi_{\text{final}}\rangle = U_T \dots U_1 |\psi_{\text{initial}}\rangle</span>
+</span><span id="L-221"><a href="#L-221"><span class="linenos">221</span></a><span class="sd">    $$</span>
+</span><span id="L-222"><a href="#L-222"><span class="linenos">222</span></a>
+</span><span id="L-223"><a href="#L-223"><span class="linenos">223</span></a><span class="sd">    where $U_1$ is the first element of the list and $U_T$ is the last.</span>
+</span><span id="L-224"><a href="#L-224"><span class="linenos">224</span></a>
+</span><span id="L-225"><a href="#L-225"><span class="linenos">225</span></a><span class="sd">    **Runtime:**</span>
+</span><span id="L-226"><a href="#L-226"><span class="linenos">226</span></a>
+</span><span id="L-227"><a href="#L-227"><span class="linenos">227</span></a><span class="sd">    * **General case (with squeezing):** $O(T n^3)$, where $T$ is the number of unitaries and $n$ is the number of modes.</span>
+</span><span id="L-228"><a href="#L-228"><span class="linenos">228</span></a><span class="sd">    * **Without squeezing:** $O(n^2 + T n)$. The complexity is dominated by the single initial deep copy of the state ($O(n^2)$), followed by efficient $O(n)$ in-place updates for displacement, phase shift, and beam splitter operations.</span>
+</span><span id="L-229"><a href="#L-229"><span class="linenos">229</span></a>
+</span><span id="L-230"><a href="#L-230"><span class="linenos">230</span></a><span class="sd">    Parameters</span>
+</span><span id="L-231"><a href="#L-231"><span class="linenos">231</span></a><span class="sd">    ----------</span>
+</span><span id="L-232"><a href="#L-232"><span class="linenos">232</span></a><span class="sd">    gaussian_state_description : GaussianStateDescription</span>
+</span><span id="L-233"><a href="#L-233"><span class="linenos">233</span></a><span class="sd">        The description of the initial state.</span>
+</span><span id="L-234"><a href="#L-234"><span class="linenos">234</span></a><span class="sd">    gaussian_unitary_descriptions : list[GaussianUnitaryDescription]</span>
+</span><span id="L-235"><a href="#L-235"><span class="linenos">235</span></a><span class="sd">        The ordered list of Gaussian unitaries to apply.</span>
+</span><span id="L-236"><a href="#L-236"><span class="linenos">236</span></a>
+</span><span id="L-237"><a href="#L-237"><span class="linenos">237</span></a><span class="sd">    Returns</span>
+</span><span id="L-238"><a href="#L-238"><span class="linenos">238</span></a><span class="sd">    -------</span>
+</span><span id="L-239"><a href="#L-239"><span class="linenos">239</span></a><span class="sd">    GaussianStateDescription</span>
+</span><span id="L-240"><a href="#L-240"><span class="linenos">240</span></a><span class="sd">        The description of the final state after applying all unitaries.</span>
+</span><span id="L-241"><a href="#L-241"><span class="linenos">241</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-242"><a href="#L-242"><span class="linenos">242</span></a>    <span class="n">gsd</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">gaussian_state_description</span><span class="p">)</span>
+</span><span id="L-243"><a href="#L-243"><span class="linenos">243</span></a>    <span class="k">for</span> <span class="n">unitary_description</span> <span class="ow">in</span> <span class="n">gaussian_unitary_descriptions</span><span class="p">:</span>
+</span><span id="L-244"><a href="#L-244"><span class="linenos">244</span></a>        <span class="n">applyunitary_inplace</span><span class="p">(</span><span class="n">gsd</span><span class="p">,</span> <span class="n">unitary_description</span><span class="p">)</span>
+</span><span id="L-245"><a href="#L-245"><span class="linenos">245</span></a>
+</span><span id="L-246"><a href="#L-246"><span class="linenos">246</span></a>    <span class="k">return</span> <span class="n">gsd</span>
 </span></pre></div>
 
 
@@ -418,7 +402,7 @@
 </span><span id="squeezing-68"><a href="#squeezing-68"><span class="linenos">68</span></a>
 </span><span id="squeezing-69"><a href="#squeezing-69"><span class="linenos">69</span></a>    <span class="c1"># compute gamma_prime_prime</span>
 </span><span id="squeezing-70"><a href="#squeezing-70"><span class="linenos">70</span></a>
-</span><span id="squeezing-71"><a href="#squeezing-71"><span class="linenos">71</span></a>    <span class="n">gamma_prime_prime</span> <span class="o">=</span> <span class="n">identity_n</span>
+</span><span id="squeezing-71"><a href="#squeezing-71"><span class="linenos">71</span></a>    <span class="n">gamma_prime_prime</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">identity_n</span><span class="p">)</span>
 </span><span id="squeezing-72"><a href="#squeezing-72"><span class="linenos">72</span></a>    <span class="n">gamma_prime_prime</span><span class="p">[</span><span class="n">block_slice</span><span class="p">,</span> <span class="n">block_slice</span><span class="p">]</span> <span class="o">=</span> <span class="n">s_block</span> <span class="o">@</span> <span class="n">s_block</span><span class="o">.</span><span class="n">T</span>
 </span><span id="squeezing-73"><a href="#squeezing-73"><span class="linenos">73</span></a>
 </span><span id="squeezing-74"><a href="#squeezing-74"><span class="linenos">74</span></a>    <span class="c1"># compute alpha_prime</span>
@@ -432,7 +416,7 @@
 </span><span id="squeezing-82"><a href="#squeezing-82"><span class="linenos">82</span></a>    <span class="n">d1</span> <span class="o">=</span> <span class="n">d2</span> <span class="o">=</span> <span class="n">d3</span> <span class="o">=</span> <span class="n">dhat_alpha_prime</span>
 </span><span id="squeezing-83"><a href="#squeezing-83"><span class="linenos">83</span></a>    <span class="n">gamma1</span><span class="p">,</span> <span class="n">gamma2</span><span class="p">,</span> <span class="n">gamma3</span> <span class="o">=</span> <span class="n">gamma_prime_prime</span><span class="p">,</span> <span class="n">identity_n</span><span class="p">,</span> <span class="n">gamma_prime</span>
 </span><span id="squeezing-84"><a href="#squeezing-84"><span class="linenos">84</span></a>    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-</span><span id="squeezing-85"><a href="#squeezing-85"><span class="linenos">85</span></a>    <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+</span><span id="squeezing-85"><a href="#squeezing-85"><span class="linenos">85</span></a>    <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">z</span><span class="p">)))</span>
 </span><span id="squeezing-86"><a href="#squeezing-86"><span class="linenos">86</span></a>    <span class="n">zero_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">)</span>
 </span><span id="squeezing-87"><a href="#squeezing-87"><span class="linenos">87</span></a>    <span class="n">r_prime</span> <span class="o">=</span> <span class="n">overlaptriple</span><span class="p">(</span><span class="n">gamma1</span><span class="p">,</span> <span class="n">gamma2</span><span class="p">,</span> <span class="n">gamma3</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">,</span> <span class="n">d3</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">zero_vector</span><span class="p">)</span>
 </span><span id="squeezing-88"><a href="#squeezing-88"><span class="linenos">88</span></a>
@@ -522,9 +506,9 @@ Note that this implementation uses 0-based indexing.</li>
 </span><span id="applyunitary_inplace-127"><a href="#applyunitary_inplace-127"><span class="linenos">127</span></a>
 </span><span id="applyunitary_inplace-128"><a href="#applyunitary_inplace-128"><span class="linenos">128</span></a>        <span class="k">case</span> <span class="n">gu_description</span><span class="o">.</span><span class="n">DisplacementDescription</span><span class="p">(</span><span class="n">beta</span><span class="p">):</span>
 </span><span id="applyunitary_inplace-129"><a href="#applyunitary_inplace-129"><span class="linenos">129</span></a>            <span class="n">alpha</span> <span class="o">=</span> <span class="n">gsd</span><span class="o">.</span><span class="n">amplitude</span>
-</span><span id="applyunitary_inplace-130"><a href="#applyunitary_inplace-130"><span class="linenos">130</span></a>            <span class="n">exponent</span> <span class="o">=</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">beta</span><span class="p">))</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
-</span><span id="applyunitary_inplace-131"><a href="#applyunitary_inplace-131"><span class="linenos">131</span></a>            <span class="n">alpha_prime</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">exponent</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">-</span> <span class="n">beta</span><span class="p">)</span>
-</span><span id="applyunitary_inplace-132"><a href="#applyunitary_inplace-132"><span class="linenos">132</span></a>            <span class="n">gsd</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">alpha_prime</span>
+</span><span id="applyunitary_inplace-130"><a href="#applyunitary_inplace-130"><span class="linenos">130</span></a>            <span class="n">exponent</span> <span class="o">=</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">beta</span><span class="p">)))</span>
+</span><span id="applyunitary_inplace-131"><a href="#applyunitary_inplace-131"><span class="linenos">131</span></a>            <span class="n">gsd</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">-</span> <span class="n">beta</span>
+</span><span id="applyunitary_inplace-132"><a href="#applyunitary_inplace-132"><span class="linenos">132</span></a>            <span class="n">gsd</span><span class="o">.</span><span class="n">overlap</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">exponent</span><span class="p">)</span>
 </span><span id="applyunitary_inplace-133"><a href="#applyunitary_inplace-133"><span class="linenos">133</span></a>
 </span><span id="applyunitary_inplace-134"><a href="#applyunitary_inplace-134"><span class="linenos">134</span></a>        <span class="k">case</span> <span class="n">gu_description</span><span class="o">.</span><span class="n">PhaseShiftDescription</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
 </span><span id="applyunitary_inplace-135"><a href="#applyunitary_inplace-135"><span class="linenos">135</span></a>            <span class="c1"># --- update amplitude ---</span>
@@ -551,19 +535,20 @@ Note that this implementation uses 0-based indexing.</li>
 </span><span id="applyunitary_inplace-156"><a href="#applyunitary_inplace-156"><span class="linenos">156</span></a>
 </span><span id="applyunitary_inplace-157"><a href="#applyunitary_inplace-157"><span class="linenos">157</span></a>            <span class="c1"># --- update covariance matrix ---</span>
 </span><span id="applyunitary_inplace-158"><a href="#applyunitary_inplace-158"><span class="linenos">158</span></a>            <span class="n">gamma</span> <span class="o">=</span> <span class="n">gsd</span><span class="o">.</span><span class="n">covariance_matrix</span>
-</span><span id="applyunitary_inplace-159"><a href="#applyunitary_inplace-159"><span class="linenos">159</span></a>            <span class="n">s_block</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-</span><span id="applyunitary_inplace-160"><a href="#applyunitary_inplace-160"><span class="linenos">160</span></a>                <span class="p">[</span>
-</span><span id="applyunitary_inplace-161"><a href="#applyunitary_inplace-161"><span class="linenos">161</span></a>                    <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">w</span><span class="p">)],</span>
-</span><span id="applyunitary_inplace-162"><a href="#applyunitary_inplace-162"><span class="linenos">162</span></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
-</span><span id="applyunitary_inplace-163"><a href="#applyunitary_inplace-163"><span class="linenos">163</span></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
-</span><span id="applyunitary_inplace-164"><a href="#applyunitary_inplace-164"><span class="linenos">164</span></a>                    <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">w</span><span class="p">)],</span>
-</span><span id="applyunitary_inplace-165"><a href="#applyunitary_inplace-165"><span class="linenos">165</span></a>                <span class="p">]</span>
-</span><span id="applyunitary_inplace-166"><a href="#applyunitary_inplace-166"><span class="linenos">166</span></a>            <span class="p">)</span>
-</span><span id="applyunitary_inplace-167"><a href="#applyunitary_inplace-167"><span class="linenos">167</span></a>            <span class="n">block_indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">j</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">k</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
-</span><span id="applyunitary_inplace-168"><a href="#applyunitary_inplace-168"><span class="linenos">168</span></a>            <span class="c1"># multiply by S from the left</span>
-</span><span id="applyunitary_inplace-169"><a href="#applyunitary_inplace-169"><span class="linenos">169</span></a>            <span class="n">gamma</span><span class="p">[</span><span class="n">block_indices</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">s_block</span> <span class="o">@</span> <span class="n">gamma</span><span class="p">[</span><span class="n">block_indices</span><span class="p">,</span> <span class="p">:]</span>
-</span><span id="applyunitary_inplace-170"><a href="#applyunitary_inplace-170"><span class="linenos">170</span></a>            <span class="c1"># multiply by S^T from the right</span>
-</span><span id="applyunitary_inplace-171"><a href="#applyunitary_inplace-171"><span class="linenos">171</span></a>            <span class="n">gamma</span><span class="p">[:,</span> <span class="n">block_indices</span><span class="p">]</span> <span class="o">=</span> <span class="n">gamma</span><span class="p">[:,</span> <span class="n">block_indices</span><span class="p">]</span> <span class="o">@</span> <span class="n">s_block</span><span class="o">.</span><span class="n">T</span>
+</span><span id="applyunitary_inplace-159"><a href="#applyunitary_inplace-159"><span class="linenos">159</span></a>            <span class="n">c</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+</span><span id="applyunitary_inplace-160"><a href="#applyunitary_inplace-160"><span class="linenos">160</span></a>            <span class="n">s_block</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+</span><span id="applyunitary_inplace-161"><a href="#applyunitary_inplace-161"><span class="linenos">161</span></a>                <span class="p">[</span>
+</span><span id="applyunitary_inplace-162"><a href="#applyunitary_inplace-162"><span class="linenos">162</span></a>                    <span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">s</span><span class="p">],</span>
+</span><span id="applyunitary_inplace-163"><a href="#applyunitary_inplace-163"><span class="linenos">163</span></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="o">-</span><span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+</span><span id="applyunitary_inplace-164"><a href="#applyunitary_inplace-164"><span class="linenos">164</span></a>                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+</span><span id="applyunitary_inplace-165"><a href="#applyunitary_inplace-165"><span class="linenos">165</span></a>                    <span class="p">[</span><span class="o">-</span><span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="p">],</span>
+</span><span id="applyunitary_inplace-166"><a href="#applyunitary_inplace-166"><span class="linenos">166</span></a>                <span class="p">]</span>
+</span><span id="applyunitary_inplace-167"><a href="#applyunitary_inplace-167"><span class="linenos">167</span></a>            <span class="p">)</span>
+</span><span id="applyunitary_inplace-168"><a href="#applyunitary_inplace-168"><span class="linenos">168</span></a>            <span class="n">block_indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">j</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">k</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+</span><span id="applyunitary_inplace-169"><a href="#applyunitary_inplace-169"><span class="linenos">169</span></a>            <span class="c1"># multiply by S from the left</span>
+</span><span id="applyunitary_inplace-170"><a href="#applyunitary_inplace-170"><span class="linenos">170</span></a>            <span class="n">gamma</span><span class="p">[</span><span class="n">block_indices</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">s_block</span> <span class="o">@</span> <span class="n">gamma</span><span class="p">[</span><span class="n">block_indices</span><span class="p">,</span> <span class="p">:]</span>
+</span><span id="applyunitary_inplace-171"><a href="#applyunitary_inplace-171"><span class="linenos">171</span></a>            <span class="c1"># multiply by S^T from the right</span>
+</span><span id="applyunitary_inplace-172"><a href="#applyunitary_inplace-172"><span class="linenos">172</span></a>            <span class="n">gamma</span><span class="p">[:,</span> <span class="n">block_indices</span><span class="p">]</span> <span class="o">=</span> <span class="n">gamma</span><span class="p">[:,</span> <span class="n">block_indices</span><span class="p">]</span> <span class="o">@</span> <span class="n">s_block</span><span class="o">.</span><span class="n">T</span>
 </span></pre></div>
 
 
@@ -612,38 +597,38 @@ The description of the Gaussian unitary operation to apply.</li>
 
     </div>
     <a class="headerlink" href="#applyunitary"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="applyunitary-174"><a href="#applyunitary-174"><span class="linenos">174</span></a><span class="k">def</span><span class="w"> </span><span class="nf">applyunitary</span><span class="p">(</span>
-</span><span id="applyunitary-175"><a href="#applyunitary-175"><span class="linenos">175</span></a>    <span class="n">gaussian_state_description</span><span class="p">:</span> <span class="n">GaussianStateDescription</span><span class="p">,</span>
-</span><span id="applyunitary-176"><a href="#applyunitary-176"><span class="linenos">176</span></a>    <span class="n">gaussian_unitary_description</span><span class="p">:</span> <span class="n">gu_description</span><span class="o">.</span><span class="n">GaussianUnitaryDescription</span><span class="p">,</span>
-</span><span id="applyunitary-177"><a href="#applyunitary-177"><span class="linenos">177</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GaussianStateDescription</span><span class="p">:</span>
-</span><span id="applyunitary-178"><a href="#applyunitary-178"><span class="linenos">178</span></a><span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="applyunitary-179"><a href="#applyunitary-179"><span class="linenos">179</span></a><span class="sd">    Returns a new description of a Gaussian state after applying a Gaussian unitary.</span>
-</span><span id="applyunitary-180"><a href="#applyunitary-180"><span class="linenos">180</span></a>
-</span><span id="applyunitary-181"><a href="#applyunitary-181"><span class="linenos">181</span></a><span class="sd">    This is a wrapper around `applyunitary_inplace` that preserves the original</span>
-</span><span id="applyunitary-182"><a href="#applyunitary-182"><span class="linenos">182</span></a><span class="sd">    state description by performing a deep copy before applying the operation.</span>
-</span><span id="applyunitary-183"><a href="#applyunitary-183"><span class="linenos">183</span></a>
-</span><span id="applyunitary-184"><a href="#applyunitary-184"><span class="linenos">184</span></a><span class="sd">    **Runtime:**</span>
-</span><span id="applyunitary-185"><a href="#applyunitary-185"><span class="linenos">185</span></a>
-</span><span id="applyunitary-186"><a href="#applyunitary-186"><span class="linenos">186</span></a><span class="sd">    * **Squeezing:** $O(n^3)$.</span>
-</span><span id="applyunitary-187"><a href="#applyunitary-187"><span class="linenos">187</span></a><span class="sd">    * **Others:** $O(n^2)$. While the arithmetic updates for displacements, phase shifts,</span>
-</span><span id="applyunitary-188"><a href="#applyunitary-188"><span class="linenos">188</span></a><span class="sd">      and beam splitters are $O(n)$, this function requires $O(n^2)$ time to allocate</span>
-</span><span id="applyunitary-189"><a href="#applyunitary-189"><span class="linenos">189</span></a><span class="sd">      and copy the $2n \times 2n$ covariance matrix.</span>
-</span><span id="applyunitary-190"><a href="#applyunitary-190"><span class="linenos">190</span></a>
-</span><span id="applyunitary-191"><a href="#applyunitary-191"><span class="linenos">191</span></a><span class="sd">    Parameters</span>
-</span><span id="applyunitary-192"><a href="#applyunitary-192"><span class="linenos">192</span></a><span class="sd">    ----------</span>
-</span><span id="applyunitary-193"><a href="#applyunitary-193"><span class="linenos">193</span></a><span class="sd">    gaussian_state_description : GaussianStateDescription</span>
-</span><span id="applyunitary-194"><a href="#applyunitary-194"><span class="linenos">194</span></a><span class="sd">        The initial state description.</span>
-</span><span id="applyunitary-195"><a href="#applyunitary-195"><span class="linenos">195</span></a><span class="sd">    gaussian_unitary_description : GaussianUnitaryDescription</span>
-</span><span id="applyunitary-196"><a href="#applyunitary-196"><span class="linenos">196</span></a><span class="sd">        The unitary operation to apply.</span>
-</span><span id="applyunitary-197"><a href="#applyunitary-197"><span class="linenos">197</span></a>
-</span><span id="applyunitary-198"><a href="#applyunitary-198"><span class="linenos">198</span></a><span class="sd">    Returns</span>
-</span><span id="applyunitary-199"><a href="#applyunitary-199"><span class="linenos">199</span></a><span class="sd">    -------</span>
-</span><span id="applyunitary-200"><a href="#applyunitary-200"><span class="linenos">200</span></a><span class="sd">    GaussianStateDescription</span>
-</span><span id="applyunitary-201"><a href="#applyunitary-201"><span class="linenos">201</span></a><span class="sd">        The new description of the evolved state.</span>
-</span><span id="applyunitary-202"><a href="#applyunitary-202"><span class="linenos">202</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="applyunitary-203"><a href="#applyunitary-203"><span class="linenos">203</span></a>    <span class="n">gsd_copy</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">gaussian_state_description</span><span class="p">)</span>
-</span><span id="applyunitary-204"><a href="#applyunitary-204"><span class="linenos">204</span></a>    <span class="n">applyunitary_inplace</span><span class="p">(</span><span class="n">gsd_copy</span><span class="p">,</span> <span class="n">gaussian_unitary_description</span><span class="p">)</span>
-</span><span id="applyunitary-205"><a href="#applyunitary-205"><span class="linenos">205</span></a>    <span class="k">return</span> <span class="n">gsd_copy</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="applyunitary-175"><a href="#applyunitary-175"><span class="linenos">175</span></a><span class="k">def</span><span class="w"> </span><span class="nf">applyunitary</span><span class="p">(</span>
+</span><span id="applyunitary-176"><a href="#applyunitary-176"><span class="linenos">176</span></a>    <span class="n">gaussian_state_description</span><span class="p">:</span> <span class="n">GaussianStateDescription</span><span class="p">,</span>
+</span><span id="applyunitary-177"><a href="#applyunitary-177"><span class="linenos">177</span></a>    <span class="n">gaussian_unitary_description</span><span class="p">:</span> <span class="n">gu_description</span><span class="o">.</span><span class="n">GaussianUnitaryDescription</span><span class="p">,</span>
+</span><span id="applyunitary-178"><a href="#applyunitary-178"><span class="linenos">178</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GaussianStateDescription</span><span class="p">:</span>
+</span><span id="applyunitary-179"><a href="#applyunitary-179"><span class="linenos">179</span></a><span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="applyunitary-180"><a href="#applyunitary-180"><span class="linenos">180</span></a><span class="sd">    Returns a new description of a Gaussian state after applying a Gaussian unitary.</span>
+</span><span id="applyunitary-181"><a href="#applyunitary-181"><span class="linenos">181</span></a>
+</span><span id="applyunitary-182"><a href="#applyunitary-182"><span class="linenos">182</span></a><span class="sd">    This is a wrapper around `applyunitary_inplace` that preserves the original</span>
+</span><span id="applyunitary-183"><a href="#applyunitary-183"><span class="linenos">183</span></a><span class="sd">    state description by performing a deep copy before applying the operation.</span>
+</span><span id="applyunitary-184"><a href="#applyunitary-184"><span class="linenos">184</span></a>
+</span><span id="applyunitary-185"><a href="#applyunitary-185"><span class="linenos">185</span></a><span class="sd">    **Runtime:**</span>
+</span><span id="applyunitary-186"><a href="#applyunitary-186"><span class="linenos">186</span></a>
+</span><span id="applyunitary-187"><a href="#applyunitary-187"><span class="linenos">187</span></a><span class="sd">    * **Squeezing:** $O(n^3)$.</span>
+</span><span id="applyunitary-188"><a href="#applyunitary-188"><span class="linenos">188</span></a><span class="sd">    * **Others:** $O(n^2)$. While the arithmetic updates for displacements, phase shifts,</span>
+</span><span id="applyunitary-189"><a href="#applyunitary-189"><span class="linenos">189</span></a><span class="sd">      and beam splitters are $O(n)$, this function requires $O(n^2)$ time to allocate</span>
+</span><span id="applyunitary-190"><a href="#applyunitary-190"><span class="linenos">190</span></a><span class="sd">      and copy the $2n \times 2n$ covariance matrix.</span>
+</span><span id="applyunitary-191"><a href="#applyunitary-191"><span class="linenos">191</span></a>
+</span><span id="applyunitary-192"><a href="#applyunitary-192"><span class="linenos">192</span></a><span class="sd">    Parameters</span>
+</span><span id="applyunitary-193"><a href="#applyunitary-193"><span class="linenos">193</span></a><span class="sd">    ----------</span>
+</span><span id="applyunitary-194"><a href="#applyunitary-194"><span class="linenos">194</span></a><span class="sd">    gaussian_state_description : GaussianStateDescription</span>
+</span><span id="applyunitary-195"><a href="#applyunitary-195"><span class="linenos">195</span></a><span class="sd">        The initial state description.</span>
+</span><span id="applyunitary-196"><a href="#applyunitary-196"><span class="linenos">196</span></a><span class="sd">    gaussian_unitary_description : GaussianUnitaryDescription</span>
+</span><span id="applyunitary-197"><a href="#applyunitary-197"><span class="linenos">197</span></a><span class="sd">        The unitary operation to apply.</span>
+</span><span id="applyunitary-198"><a href="#applyunitary-198"><span class="linenos">198</span></a>
+</span><span id="applyunitary-199"><a href="#applyunitary-199"><span class="linenos">199</span></a><span class="sd">    Returns</span>
+</span><span id="applyunitary-200"><a href="#applyunitary-200"><span class="linenos">200</span></a><span class="sd">    -------</span>
+</span><span id="applyunitary-201"><a href="#applyunitary-201"><span class="linenos">201</span></a><span class="sd">    GaussianStateDescription</span>
+</span><span id="applyunitary-202"><a href="#applyunitary-202"><span class="linenos">202</span></a><span class="sd">        The new description of the evolved state.</span>
+</span><span id="applyunitary-203"><a href="#applyunitary-203"><span class="linenos">203</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="applyunitary-204"><a href="#applyunitary-204"><span class="linenos">204</span></a>    <span class="n">gsd_copy</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">gaussian_state_description</span><span class="p">)</span>
+</span><span id="applyunitary-205"><a href="#applyunitary-205"><span class="linenos">205</span></a>    <span class="n">applyunitary_inplace</span><span class="p">(</span><span class="n">gsd_copy</span><span class="p">,</span> <span class="n">gaussian_unitary_description</span><span class="p">)</span>
+</span><span id="applyunitary-206"><a href="#applyunitary-206"><span class="linenos">206</span></a>    <span class="k">return</span> <span class="n">gsd_copy</span>
 </span></pre></div>
 
 
@@ -690,45 +675,45 @@ The unitary operation to apply.</li>
 
     </div>
     <a class="headerlink" href="#applyunitaries"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="applyunitaries-208"><a href="#applyunitaries-208"><span class="linenos">208</span></a><span class="k">def</span><span class="w"> </span><span class="nf">applyunitaries</span><span class="p">(</span>
-</span><span id="applyunitaries-209"><a href="#applyunitaries-209"><span class="linenos">209</span></a>    <span class="n">gaussian_state_description</span><span class="p">:</span> <span class="n">GaussianStateDescription</span><span class="p">,</span>
-</span><span id="applyunitaries-210"><a href="#applyunitaries-210"><span class="linenos">210</span></a>    <span class="n">gaussian_unitary_descriptions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">GaussianUnitaryDescription</span><span class="p">],</span>
-</span><span id="applyunitaries-211"><a href="#applyunitaries-211"><span class="linenos">211</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GaussianStateDescription</span><span class="p">:</span>
-</span><span id="applyunitaries-212"><a href="#applyunitaries-212"><span class="linenos">212</span></a><span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="applyunitaries-213"><a href="#applyunitaries-213"><span class="linenos">213</span></a><span class="sd">    Applies a sequence of Gaussian unitary operations to a Gaussian state.</span>
-</span><span id="applyunitaries-214"><a href="#applyunitaries-214"><span class="linenos">214</span></a>
-</span><span id="applyunitaries-215"><a href="#applyunitaries-215"><span class="linenos">215</span></a><span class="sd">    This function is not described in the reference paper. It sequentially applies a</span>
-</span><span id="applyunitaries-216"><a href="#applyunitaries-216"><span class="linenos">216</span></a><span class="sd">    list of Gaussian unitaries to a state, returning a new state description representing</span>
-</span><span id="applyunitaries-217"><a href="#applyunitaries-217"><span class="linenos">217</span></a><span class="sd">    the evolved state:</span>
-</span><span id="applyunitaries-218"><a href="#applyunitaries-218"><span class="linenos">218</span></a>
-</span><span id="applyunitaries-219"><a href="#applyunitaries-219"><span class="linenos">219</span></a><span class="sd">    $$</span>
-</span><span id="applyunitaries-220"><a href="#applyunitaries-220"><span class="linenos">220</span></a><span class="sd">    |\psi_{\text{final}}\rangle = U_T \dots U_1 |\psi_{\text{initial}}\rangle</span>
-</span><span id="applyunitaries-221"><a href="#applyunitaries-221"><span class="linenos">221</span></a><span class="sd">    $$</span>
-</span><span id="applyunitaries-222"><a href="#applyunitaries-222"><span class="linenos">222</span></a>
-</span><span id="applyunitaries-223"><a href="#applyunitaries-223"><span class="linenos">223</span></a><span class="sd">    where $U_1$ is the first element of the list and $U_T$ is the last.</span>
-</span><span id="applyunitaries-224"><a href="#applyunitaries-224"><span class="linenos">224</span></a>
-</span><span id="applyunitaries-225"><a href="#applyunitaries-225"><span class="linenos">225</span></a><span class="sd">    **Runtime:**</span>
-</span><span id="applyunitaries-226"><a href="#applyunitaries-226"><span class="linenos">226</span></a>
-</span><span id="applyunitaries-227"><a href="#applyunitaries-227"><span class="linenos">227</span></a><span class="sd">    * **General case (with squeezing):** $O(T n^3)$, where $T$ is the number of unitaries and $n$ is the number of modes.</span>
-</span><span id="applyunitaries-228"><a href="#applyunitaries-228"><span class="linenos">228</span></a><span class="sd">    * **Without squeezing:** $O(n^2 + T n)$. The complexity is dominated by the single initial deep copy of the state ($O(n^2)$), followed by efficient $O(n)$ in-place updates for displacement, phase shift, and beam splitter operations.</span>
-</span><span id="applyunitaries-229"><a href="#applyunitaries-229"><span class="linenos">229</span></a>
-</span><span id="applyunitaries-230"><a href="#applyunitaries-230"><span class="linenos">230</span></a><span class="sd">    Parameters</span>
-</span><span id="applyunitaries-231"><a href="#applyunitaries-231"><span class="linenos">231</span></a><span class="sd">    ----------</span>
-</span><span id="applyunitaries-232"><a href="#applyunitaries-232"><span class="linenos">232</span></a><span class="sd">    gaussian_state_description : GaussianStateDescription</span>
-</span><span id="applyunitaries-233"><a href="#applyunitaries-233"><span class="linenos">233</span></a><span class="sd">        The description of the initial state.</span>
-</span><span id="applyunitaries-234"><a href="#applyunitaries-234"><span class="linenos">234</span></a><span class="sd">    gaussian_unitary_descriptions : list[GaussianUnitaryDescription]</span>
-</span><span id="applyunitaries-235"><a href="#applyunitaries-235"><span class="linenos">235</span></a><span class="sd">        The ordered list of Gaussian unitaries to apply.</span>
-</span><span id="applyunitaries-236"><a href="#applyunitaries-236"><span class="linenos">236</span></a>
-</span><span id="applyunitaries-237"><a href="#applyunitaries-237"><span class="linenos">237</span></a><span class="sd">    Returns</span>
-</span><span id="applyunitaries-238"><a href="#applyunitaries-238"><span class="linenos">238</span></a><span class="sd">    -------</span>
-</span><span id="applyunitaries-239"><a href="#applyunitaries-239"><span class="linenos">239</span></a><span class="sd">    GaussianStateDescription</span>
-</span><span id="applyunitaries-240"><a href="#applyunitaries-240"><span class="linenos">240</span></a><span class="sd">        The description of the final state after applying all unitaries.</span>
-</span><span id="applyunitaries-241"><a href="#applyunitaries-241"><span class="linenos">241</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="applyunitaries-242"><a href="#applyunitaries-242"><span class="linenos">242</span></a>    <span class="n">gsd</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">gaussian_state_description</span><span class="p">)</span>
-</span><span id="applyunitaries-243"><a href="#applyunitaries-243"><span class="linenos">243</span></a>    <span class="k">for</span> <span class="n">unitary_description</span> <span class="ow">in</span> <span class="n">gaussian_unitary_descriptions</span><span class="p">:</span>
-</span><span id="applyunitaries-244"><a href="#applyunitaries-244"><span class="linenos">244</span></a>        <span class="n">applyunitary_inplace</span><span class="p">(</span><span class="n">gsd</span><span class="p">,</span> <span class="n">unitary_description</span><span class="p">)</span>
-</span><span id="applyunitaries-245"><a href="#applyunitaries-245"><span class="linenos">245</span></a>
-</span><span id="applyunitaries-246"><a href="#applyunitaries-246"><span class="linenos">246</span></a>    <span class="k">return</span> <span class="n">gsd</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="applyunitaries-209"><a href="#applyunitaries-209"><span class="linenos">209</span></a><span class="k">def</span><span class="w"> </span><span class="nf">applyunitaries</span><span class="p">(</span>
+</span><span id="applyunitaries-210"><a href="#applyunitaries-210"><span class="linenos">210</span></a>    <span class="n">gaussian_state_description</span><span class="p">:</span> <span class="n">GaussianStateDescription</span><span class="p">,</span>
+</span><span id="applyunitaries-211"><a href="#applyunitaries-211"><span class="linenos">211</span></a>    <span class="n">gaussian_unitary_descriptions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">GaussianUnitaryDescription</span><span class="p">],</span>
+</span><span id="applyunitaries-212"><a href="#applyunitaries-212"><span class="linenos">212</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GaussianStateDescription</span><span class="p">:</span>
+</span><span id="applyunitaries-213"><a href="#applyunitaries-213"><span class="linenos">213</span></a><span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="applyunitaries-214"><a href="#applyunitaries-214"><span class="linenos">214</span></a><span class="sd">    Applies a sequence of Gaussian unitary operations to a Gaussian state.</span>
+</span><span id="applyunitaries-215"><a href="#applyunitaries-215"><span class="linenos">215</span></a>
+</span><span id="applyunitaries-216"><a href="#applyunitaries-216"><span class="linenos">216</span></a><span class="sd">    This function is not described in the reference paper. It sequentially applies a</span>
+</span><span id="applyunitaries-217"><a href="#applyunitaries-217"><span class="linenos">217</span></a><span class="sd">    list of Gaussian unitaries to a state, returning a new state description representing</span>
+</span><span id="applyunitaries-218"><a href="#applyunitaries-218"><span class="linenos">218</span></a><span class="sd">    the evolved state:</span>
+</span><span id="applyunitaries-219"><a href="#applyunitaries-219"><span class="linenos">219</span></a>
+</span><span id="applyunitaries-220"><a href="#applyunitaries-220"><span class="linenos">220</span></a><span class="sd">    $$</span>
+</span><span id="applyunitaries-221"><a href="#applyunitaries-221"><span class="linenos">221</span></a><span class="sd">    |\psi_{\text{final}}\rangle = U_T \dots U_1 |\psi_{\text{initial}}\rangle</span>
+</span><span id="applyunitaries-222"><a href="#applyunitaries-222"><span class="linenos">222</span></a><span class="sd">    $$</span>
+</span><span id="applyunitaries-223"><a href="#applyunitaries-223"><span class="linenos">223</span></a>
+</span><span id="applyunitaries-224"><a href="#applyunitaries-224"><span class="linenos">224</span></a><span class="sd">    where $U_1$ is the first element of the list and $U_T$ is the last.</span>
+</span><span id="applyunitaries-225"><a href="#applyunitaries-225"><span class="linenos">225</span></a>
+</span><span id="applyunitaries-226"><a href="#applyunitaries-226"><span class="linenos">226</span></a><span class="sd">    **Runtime:**</span>
+</span><span id="applyunitaries-227"><a href="#applyunitaries-227"><span class="linenos">227</span></a>
+</span><span id="applyunitaries-228"><a href="#applyunitaries-228"><span class="linenos">228</span></a><span class="sd">    * **General case (with squeezing):** $O(T n^3)$, where $T$ is the number of unitaries and $n$ is the number of modes.</span>
+</span><span id="applyunitaries-229"><a href="#applyunitaries-229"><span class="linenos">229</span></a><span class="sd">    * **Without squeezing:** $O(n^2 + T n)$. The complexity is dominated by the single initial deep copy of the state ($O(n^2)$), followed by efficient $O(n)$ in-place updates for displacement, phase shift, and beam splitter operations.</span>
+</span><span id="applyunitaries-230"><a href="#applyunitaries-230"><span class="linenos">230</span></a>
+</span><span id="applyunitaries-231"><a href="#applyunitaries-231"><span class="linenos">231</span></a><span class="sd">    Parameters</span>
+</span><span id="applyunitaries-232"><a href="#applyunitaries-232"><span class="linenos">232</span></a><span class="sd">    ----------</span>
+</span><span id="applyunitaries-233"><a href="#applyunitaries-233"><span class="linenos">233</span></a><span class="sd">    gaussian_state_description : GaussianStateDescription</span>
+</span><span id="applyunitaries-234"><a href="#applyunitaries-234"><span class="linenos">234</span></a><span class="sd">        The description of the initial state.</span>
+</span><span id="applyunitaries-235"><a href="#applyunitaries-235"><span class="linenos">235</span></a><span class="sd">    gaussian_unitary_descriptions : list[GaussianUnitaryDescription]</span>
+</span><span id="applyunitaries-236"><a href="#applyunitaries-236"><span class="linenos">236</span></a><span class="sd">        The ordered list of Gaussian unitaries to apply.</span>
+</span><span id="applyunitaries-237"><a href="#applyunitaries-237"><span class="linenos">237</span></a>
+</span><span id="applyunitaries-238"><a href="#applyunitaries-238"><span class="linenos">238</span></a><span class="sd">    Returns</span>
+</span><span id="applyunitaries-239"><a href="#applyunitaries-239"><span class="linenos">239</span></a><span class="sd">    -------</span>
+</span><span id="applyunitaries-240"><a href="#applyunitaries-240"><span class="linenos">240</span></a><span class="sd">    GaussianStateDescription</span>
+</span><span id="applyunitaries-241"><a href="#applyunitaries-241"><span class="linenos">241</span></a><span class="sd">        The description of the final state after applying all unitaries.</span>
+</span><span id="applyunitaries-242"><a href="#applyunitaries-242"><span class="linenos">242</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="applyunitaries-243"><a href="#applyunitaries-243"><span class="linenos">243</span></a>    <span class="n">gsd</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">gaussian_state_description</span><span class="p">)</span>
+</span><span id="applyunitaries-244"><a href="#applyunitaries-244"><span class="linenos">244</span></a>    <span class="k">for</span> <span class="n">unitary_description</span> <span class="ow">in</span> <span class="n">gaussian_unitary_descriptions</span><span class="p">:</span>
+</span><span id="applyunitaries-245"><a href="#applyunitaries-245"><span class="linenos">245</span></a>        <span class="n">applyunitary_inplace</span><span class="p">(</span><span class="n">gsd</span><span class="p">,</span> <span class="n">unitary_description</span><span class="p">)</span>
+</span><span id="applyunitaries-246"><a href="#applyunitaries-246"><span class="linenos">246</span></a>
+</span><span id="applyunitaries-247"><a href="#applyunitaries-247"><span class="linenos">247</span></a>    <span class="k">return</span> <span class="n">gsd</span>
 </span></pre></div>
 
 
